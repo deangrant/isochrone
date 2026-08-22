@@ -5,7 +5,7 @@ packages:
 # Shared dependency versions referenced by packages via `catalog:`.
 catalog:
     "@biomejs/biome": "2.5.5"
-    "react-doctor": "0.9.1"
+    "react-doctor": "0.9.3"
     "ultracite": "7.9.4"
 
 # Dependency install/build scripts run only when listed here. true = allow,
