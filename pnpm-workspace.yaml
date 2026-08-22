@@ -4,7 +4,7 @@ packages:
 
 # Shared dependency versions referenced by packages via `catalog:`.
 catalog:
-    "@biomejs/biome": "2.5.5"
+    "@biomejs/biome": "2.5.6"
     "react-doctor": "0.9.1"
     "ultracite": "7.9.4"
 
