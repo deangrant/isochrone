@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+.pnpm/
+.pnpm-store/
+pnpm-store/
+
+# Builds
+dist/
+build/
+out/
+.next/
+.turbo/
+.cache/
+.vite/
+
+# TypeScript
+*.tsbuildinfo
+
+# Test / coverage
+coverage/
+*.lcov
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+*.swp
+*.swo
+*~

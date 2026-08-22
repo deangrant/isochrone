@@ -1,0 +1,19 @@
+.root {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  cursor: pointer;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: border-color 140ms ease;
+}
+
+.root:hover,
+.root:focus {
+  border-color: var(--color-border-strong);
+}
+
+.root:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

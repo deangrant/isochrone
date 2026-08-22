@@ -1,0 +1,90 @@
+.root {
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.track {
+  --dot-size: 0.75rem;
+  --dot-gap: 0.375rem;
+  --track-span: calc(var(--dot-size) * 2 + var(--dot-gap) * 2);
+
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  width: calc(var(--dot-size) * 3 + var(--dot-gap) * 2);
+  height: var(--dot-size);
+}
+
+.dotIdle,
+.dotActive {
+  position: absolute;
+  top: 0;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+}
+
+.dotIdle {
+  background: var(--color-border-strong);
+}
+
+.dotIdle:nth-child(1) {
+  left: 0;
+}
+
+.dotIdle:nth-child(2) {
+  left: calc(var(--dot-size) + var(--dot-gap));
+}
+
+.dotIdle:nth-child(3) {
+  left: calc((var(--dot-size) + var(--dot-gap)) * 2);
+}
+
+.dotActive {
+  left: 0;
+  z-index: 1;
+  background: var(--color-text);
+  animation: shift 2s ease-in-out infinite;
+}
+
+.lg {
+  flex-direction: column;
+  gap: var(--space-4);
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+.lg .track {
+  --dot-size: 1rem;
+  --dot-gap: 0.5rem;
+}
+
+@keyframes shift {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(calc(var(--dot-size) + var(--dot-gap)));
+  }
+
+  50% {
+    transform: translateX(var(--track-span));
+  }
+
+  75% {
+    transform: translateX(calc(var(--dot-size) + var(--dot-gap)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dotActive {
+    animation: none;
+  }
+}
