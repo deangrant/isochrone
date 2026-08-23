@@ -2,12 +2,11 @@ import type { MouseEvent } from "react";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/core/Button";
 import { Modal } from "@/components/core/Modal";
-import { downloadGeoJson } from "@/services/geojson-download-service";
-import { downloadWkt } from "@/services/wkt-download-service";
 import {
   allContourIndices,
   buildContourExportOptions,
 } from "./contour-export-options";
+import { CONTOUR_EXPORTERS } from "./contour-exporters";
 import {
   DEFAULT_EXPORT_FORMAT,
   EXPORT_FORMAT_OPTIONS,
@@ -89,11 +88,7 @@ export function ExportContoursModal({
       data: contours,
     };
 
-    if (selectedFormat === "wkt") {
-      downloadWkt(exportOptions);
-    } else {
-      downloadGeoJson(exportOptions);
-    }
+    CONTOUR_EXPORTERS[selectedFormat].download(exportOptions);
 
     onClose();
   }, [contours, onClose, selectedFormat, selectedIndices]);

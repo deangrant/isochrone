@@ -1,18 +1,8 @@
-import type { ReactElement } from "react";
-import {
-  CyclingIcon,
-  DrivingIcon,
-  TrafficIcon,
-  WalkingIcon,
-} from "./travel-mode-icons";
-
 /** UI travel mode identifiers. */
 export type TravelMode = "bicycle" | "car" | "pedestrian" | "traffic";
 
 /** One selectable travel mode for the panel. */
 export interface TravelModeOption {
-  /** Tile icon renderer. */
-  Icon: () => ReactElement;
   /** User-facing label. */
   label: string;
   /** Mapbox isochrone profile. */
@@ -24,25 +14,21 @@ export interface TravelModeOption {
 /** Supported travel modes and their Mapbox profile mappings. */
 export const TRAVEL_MODE_OPTIONS: readonly TravelModeOption[] = [
   {
-    Icon: DrivingIcon,
     label: "Driving",
     profile: "mapbox/driving",
     value: "car",
   },
   {
-    Icon: TrafficIcon,
     label: "Traffic",
     profile: "mapbox/driving-traffic",
     value: "traffic",
   },
   {
-    Icon: WalkingIcon,
     label: "Walking",
     profile: "mapbox/walking",
     value: "pedestrian",
   },
   {
-    Icon: CyclingIcon,
     label: "Cycling",
     profile: "mapbox/cycling",
     value: "bicycle",

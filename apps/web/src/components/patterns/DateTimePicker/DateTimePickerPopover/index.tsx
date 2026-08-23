@@ -1,34 +1,10 @@
-import type { MouseEvent, RefObject } from "react";
 import { Button } from "@/components/core/Button";
 import buttonStyles from "@/components/core/Button/index.module.css";
 import { Select } from "@/components/core/Select";
 import { formatMonthHeading, WEEKDAY_LABELS } from "@/utils/datetime-local";
-import { defaultDateForView, HOUR_OPTIONS, MINUTE_OPTIONS } from "./helpers";
-import styles from "./index.module.css";
-
-interface CalendarCell {
-  day: number | null;
-  key: string;
-}
-
-interface DateTimePickerPopoverProps {
-  calendarCells: CalendarCell[];
-  dialogRef: RefObject<HTMLDialogElement | null>;
-  disabled: boolean;
-  hourSelectId: string;
-  minuteSelectId: string;
-  onDayClick: (event: MouseEvent<HTMLButtonElement>) => void;
-  onDone: () => void;
-  onHourChange: (hour: string) => void;
-  onMinuteChange: (minute: string) => void;
-  onNextMonth: () => void;
-  onPreviousMonth: () => void;
-  popoverId: string;
-  selected: Date | null;
-  today: Date;
-  viewMonth: number;
-  viewYear: number;
-}
+import { defaultDateForView, HOUR_OPTIONS, MINUTE_OPTIONS } from "../helpers";
+import styles from "../index.module.css";
+import type { DateTimePickerPopoverProps } from "./index.types";
 
 /** Calendar and time controls shown inside the picker dialog. */
 export function DateTimePickerPopover({

@@ -1,4 +1,4 @@
-import type { GeocodingSuggestion } from "@/services/mapbox-geocoding-service";
+import type { GeocodingSuggestion } from "@/types/geocoding.types";
 
 /** Props for the LocationSearch pattern. */
 export interface LocationSearchProps {

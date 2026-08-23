@@ -11,8 +11,8 @@ import { useReachability } from "@/contexts/ReachabilityContext";
 import { ExcludeOptions } from "@/pages/Reachability/components/ExcludeOptions";
 import { TimeIntervals } from "@/pages/Reachability/components/TimeIntervals";
 import { TravelModeTiles } from "@/pages/Reachability/components/TravelModeTiles";
+import { useIsochronePanelHandlers } from "@/pages/Reachability/hooks/use-isochrone-panel-handlers";
 import styles from "./index.module.css";
-import { useIsochronePanelHandlers } from "./use-isochrone-panel-handlers";
 
 /** Left panel with isochrone settings, calculate, and export controls. */
 export function IsochronePanel() {

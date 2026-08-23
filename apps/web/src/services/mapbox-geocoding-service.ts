@@ -1,22 +1,10 @@
-/** One geocoding suggestion from Mapbox. */
-export interface GeocodingSuggestion {
-  /** Display label. */
-  label: string;
-  /** Latitude. */
-  lat: number;
-  /** Longitude. */
-  lon: number;
-}
+import type { GeocodingSuggestion } from "@/types/geocoding.types";
 
 /**
  * Port for forward geocoding place search.
  */
 export interface IGeocodingService {
-  /**
-   * Searches for place suggestions matching a query.
-   * @param query Partial place name or address.
-   * @param signal Optional abort signal.
-   */
+  /** Searches for place suggestions matching a query. */
   search: (
     query: string,
     signal?: AbortSignal,
@@ -38,8 +26,6 @@ export class MapboxGeocodingService implements IGeocodingService {
 
   /**
    * Searches for place suggestions matching a query.
-   * @param query Partial place name or address.
-   * @param signal Optional abort signal.
    */
   async search(
     query: string,

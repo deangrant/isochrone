@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Spinner } from "@/components/core/Spinner";
+import { getMapboxAccessToken } from "@/config/mapbox.config";
 import { useReachability } from "@/contexts/ReachabilityContext";
 import { IsochronePanel } from "@/pages/Reachability/components/IsochronePanel";
 import styles from "./index.module.css";
@@ -26,6 +27,7 @@ export function ReachabilityLayout() {
           <MapView
             boundsToFit={state.boundsToFit}
             contours={state.result}
+            mapboxAccessToken={getMapboxAccessToken()}
             mapView={state.mapView}
             onBoundsFitted={actions.clearBoundsToFit}
             onFitContours={actions.fitContoursBounds}

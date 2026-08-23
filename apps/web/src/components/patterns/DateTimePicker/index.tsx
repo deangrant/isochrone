@@ -13,10 +13,10 @@ import {
   getMonthCalendarDays,
   parseDateTimeLocal,
 } from "@/utils/datetime-local";
+import { DateTimePickerPopover } from "./DateTimePickerPopover";
 import { defaultDateForView } from "./helpers";
 import styles from "./index.module.css";
 import type { DateTimePickerProps } from "./index.types";
-import { DateTimePickerPopover } from "./popover";
 
 /** Themed date and time picker with a custom calendar popover. */
 export function DateTimePicker({

@@ -1,9 +1,10 @@
 import type { FeatureCollection, Geometry } from "geojson";
 import { supportsExcludeProfile } from "@/constants/exclude-options.constants";
 import type { IReachabilityClient } from "@/services/mapbox-isochrone-service";
+import type { ReachabilityOrigin } from "@/types/reachability.types";
 import { buildContours, type ContourSpec } from "@/utils/build-contours";
 import { buildExcludeParam } from "@/utils/build-exclude-param";
-import type { ReachabilityOrigin, ReachabilitySettings } from "./index.types";
+import type { ReachabilitySettings } from "./index.types";
 
 /** Result of a reachability calculation attempt. */
 export type ReachabilityCalculationResult =
@@ -19,11 +20,6 @@ export type ReachabilityCalculationResult =
 
 /**
  * Runs a reachability calculation with the given settings.
- * @param reachability Reachability API client.
- * @param origin Calculation origin.
- * @param settings Panel settings.
- * @param profile Mapbox isochrone profile.
- * @param signal Optional abort signal.
  */
 export async function runReachabilityCalculation(
   reachability: IReachabilityClient,
@@ -77,7 +73,6 @@ export async function runReachabilityCalculation(
 
 /**
  * Computes a bounding box for a feature collection.
- * @param collection Reachability contour features.
  */
 export function computeBounds(
   collection: FeatureCollection,

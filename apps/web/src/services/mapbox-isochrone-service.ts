@@ -1,11 +1,6 @@
 import type { Feature, FeatureCollection } from "geojson";
+import type { ReachabilityOrigin } from "@/types/reachability.types";
 import type { ContourSpec } from "@/utils/build-contours";
-
-/** Geographic origin for a reachability calculation. */
-export interface ReachabilityOrigin {
-  lat: number;
-  lon: number;
-}
 
 /** Parameters for a Mapbox isochrone request. */
 export interface ReachabilityRequest {
@@ -26,11 +21,7 @@ export interface ReachabilityRequest {
  * Port for computing reachability isochrones.
  */
 export interface IReachabilityClient {
-  /**
-   * Requests isochrone contours for the given parameters.
-   * @param request Reachability parameters.
-   * @param signal Optional abort signal.
-   */
+  /** Requests isochrone contours for the given parameters. */
   computeIsochrones: (
     request: ReachabilityRequest,
     signal?: AbortSignal,
@@ -52,8 +43,6 @@ export class MapboxIsochroneService implements IReachabilityClient {
 
   /**
    * Requests isochrone contours for the given parameters.
-   * @param request Reachability parameters.
-   * @param signal Optional abort signal.
    */
   async computeIsochrones(
     request: ReachabilityRequest,

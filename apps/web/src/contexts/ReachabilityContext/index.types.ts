@@ -1,20 +1,17 @@
 import type { FeatureCollection } from "geojson";
 import type { ExcludeOptionValue } from "@/constants/exclude-options.constants";
 import type { TravelMode } from "@/constants/travel-modes.constants";
-import type { GeocodingSuggestion } from "@/services/mapbox-geocoding-service";
+import type { GeocodingSuggestion } from "@/types/geocoding.types";
 
-/** Geographic origin for reachability calculation. */
-export interface ReachabilityOrigin {
-  lat: number;
-  lon: number;
-}
+export type {
+  MapViewState,
+  ReachabilityOrigin,
+} from "@/types/reachability.types";
 
-/** Map camera state. */
-export interface MapViewState {
-  lat: number;
-  lon: number;
-  zoom: number;
-}
+import type {
+  MapViewState,
+  ReachabilityOrigin,
+} from "@/types/reachability.types";
 
 /** Isochrone settings controlled by the panel. */
 export interface ReachabilitySettings {
@@ -28,8 +25,11 @@ export interface ReachabilitySettings {
   exclude: ExcludeOptionValue[];
   /** Douglas-Peucker tolerance in metres (0 = API default). */
   generalize: number;
+  /** Location search query or coordinate string. */
   locationQuery: string;
+  /** Contour time intervals in minutes. */
   timeIntervals: number[];
+  /** Selected travel mode for routing. */
   travelMode: TravelMode;
 }
 

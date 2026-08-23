@@ -42,6 +42,7 @@ export function MapView({
   origin,
   contours,
   boundsToFit,
+  mapboxAccessToken,
   onBoundsFitted,
   onViewChange,
   onFitContours,
@@ -56,7 +57,7 @@ export function MapView({
   const applyingExternalViewRef = useRef(false);
   const [exportModalOpen, setExportModalOpen] = useState(false);
   const [exportModalKey, setExportModalKey] = useState(0);
-  const accessToken = import.meta.env.VITE_MAPBOX_GL_JS_PUBLIC;
+  const accessToken = mapboxAccessToken;
   const hasContours = contours !== null && contours.features.length > 0;
   const profileLabel = getTravelModeLabel(resultTravelMode ?? "car");
 
@@ -76,12 +77,11 @@ export function MapView({
 
   useEffect(() => {
     const container = containerRef.current;
-    const token = import.meta.env.VITE_MAPBOX_GL_JS_PUBLIC;
-    if (!(container && token)) {
+    if (!(container && mapboxAccessToken)) {
       return;
     }
 
-    mapboxgl.accessToken = token;
+    mapboxgl.accessToken = mapboxAccessToken;
     mapReadyRef.current = false;
 
     const map = new mapboxgl.Map({
@@ -133,7 +133,7 @@ export function MapView({
       map.off("moveend", onMoveEnd);
       map.remove();
     };
-  }, []);
+  }, [mapboxAccessToken]);
 
   useEffect(() => {
     const map = mapRef.current;

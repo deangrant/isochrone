@@ -1,4 +1,5 @@
 import { type ChangeEvent, useCallback } from "react";
+import { TravelModeIcon } from "@/components/core/TravelModeIcon";
 import {
   TRAVEL_MODE_OPTIONS,
   type TravelMode,
@@ -23,7 +24,6 @@ export function TravelModeTiles({
     <div aria-label="Routing profile" className={styles.root} role="radiogroup">
       {TRAVEL_MODE_OPTIONS.map((option) => {
         const selected = option.value === value;
-        const { Icon } = option;
         const inputId = `travel-mode-${option.value}`;
 
         return (
@@ -42,7 +42,7 @@ export function TravelModeTiles({
               type="radio"
               value={option.value}
             />
-            <Icon />
+            <TravelModeIcon mode={option.value} />
             <span className={styles.label}>{option.label}</span>
           </label>
         );

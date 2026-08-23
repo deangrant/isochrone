@@ -1,19 +1,22 @@
+import { getMapboxAccessToken } from "@/config/mapbox.config";
+import type { IGeocodingService } from "@/services/mapbox-geocoding-service";
 import { MapboxGeocodingService } from "@/services/mapbox-geocoding-service";
+import type { IReachabilityClient } from "@/services/mapbox-isochrone-service";
 import { MapboxIsochroneService } from "@/services/mapbox-isochrone-service";
 
 /** Wired application services. */
 export interface AppServices {
   /** Mapbox forward geocoding. */
-  geocoding: MapboxGeocodingService;
+  geocoding: IGeocodingService;
   /** Mapbox isochrone API client. */
-  reachability: MapboxIsochroneService;
+  reachability: IReachabilityClient;
 }
 
 /**
  * Creates application services from environment configuration.
  */
 export function createServices(): AppServices {
-  const mapboxToken = import.meta.env.VITE_MAPBOX_GL_JS_PUBLIC ?? "";
+  const mapboxToken = getMapboxAccessToken();
 
   return {
     geocoding: new MapboxGeocodingService(mapboxToken),
