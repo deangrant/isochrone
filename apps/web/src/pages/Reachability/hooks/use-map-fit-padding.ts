@@ -1,24 +1,23 @@
-import { type RefObject, useEffect, useState } from "react";
+import { type RefObject, useLayoutEffect, useState } from "react";
+import { REACHABILITY_LAYOUT_BREAKPOINT_PX } from "@/constants/api.constants";
 import {
-  MAP_FIT_PADDING_BASE,
-  REACHABILITY_LAYOUT_BREAKPOINT_PX,
-} from "@/constants/api.constants";
-import {
+  desktopSidePanelFallbackPadding,
   type MapFitPadding,
   panelRectToFitPadding,
 } from "@/utils/map-fit-padding";
-
-const DEFAULT_PADDING: MapFitPadding = {
-  bottom: MAP_FIT_PADDING_BASE,
-  left: MAP_FIT_PADDING_BASE,
-  right: MAP_FIT_PADDING_BASE,
-  top: MAP_FIT_PADDING_BASE,
-};
 
 function isBottomSheetLayout(): boolean {
   return window.matchMedia(
     `(max-width: ${REACHABILITY_LAYOUT_BREAKPOINT_PX}px)`,
   ).matches;
+}
+
+function getInitialPadding(): MapFitPadding {
+  if (typeof window === "undefined") {
+    return desktopSidePanelFallbackPadding(false);
+  }
+
+  return desktopSidePanelFallbackPadding(isBottomSheetLayout());
 }
 
 /**
@@ -28,9 +27,10 @@ function isBottomSheetLayout(): boolean {
 export function useMapFitPadding(
   panelRef: RefObject<HTMLElement | null>,
 ): MapFitPadding {
-  const [fitPadding, setFitPadding] = useState<MapFitPadding>(DEFAULT_PADDING);
+  const [fitPadding, setFitPadding] =
+    useState<MapFitPadding>(getInitialPadding);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const panel = panelRef.current;
     if (!panel) {
       return;

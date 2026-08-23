@@ -1,5 +1,6 @@
-import { lazy, Suspense, useRef } from "react";
+import { type CSSProperties, lazy, Suspense, useRef } from "react";
 import { Spinner } from "@/components/core/Spinner";
+import { REACHABILITY_SIDE_PANEL_MAX_WIDTH_PX } from "@/constants/api.constants";
 import { getMapboxAccessToken } from "@/constants/mapbox.constants";
 import {
   useReachabilityCalculationState,
@@ -50,6 +51,11 @@ export function ReachabilityLayout() {
         aria-label="Isochrone settings"
         className={styles.sidePanel}
         ref={panelRef}
+        style={
+          {
+            "--reachability-panel-max-width": `${REACHABILITY_SIDE_PANEL_MAX_WIDTH_PX}px`,
+          } as CSSProperties
+        }
       >
         <IsochronePanel />
       </aside>

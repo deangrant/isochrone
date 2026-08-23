@@ -1,6 +1,36 @@
 import { describe, expect, it } from "vitest";
-import { MAP_FIT_PADDING_BASE } from "@/constants/api.constants";
-import { panelRectToFitPadding } from "@/utils/map-fit-padding";
+import {
+  MAP_FIT_PADDING_BASE,
+  REACHABILITY_PANEL_INSET_PX,
+  REACHABILITY_SIDE_PANEL_MAX_WIDTH_PX,
+} from "@/constants/api.constants";
+import {
+  desktopSidePanelFallbackPadding,
+  panelRectToFitPadding,
+} from "@/utils/map-fit-padding";
+
+describe("desktopSidePanelFallbackPadding", () => {
+  it("uses panel width and inset for desktop left padding", () => {
+    expect(desktopSidePanelFallbackPadding(false)).toEqual({
+      bottom: MAP_FIT_PADDING_BASE,
+      left:
+        REACHABILITY_PANEL_INSET_PX +
+        REACHABILITY_SIDE_PANEL_MAX_WIDTH_PX +
+        MAP_FIT_PADDING_BASE,
+      right: MAP_FIT_PADDING_BASE,
+      top: MAP_FIT_PADDING_BASE,
+    });
+  });
+
+  it("uses uniform padding for bottom-sheet layout", () => {
+    expect(desktopSidePanelFallbackPadding(true)).toEqual({
+      bottom: MAP_FIT_PADDING_BASE,
+      left: MAP_FIT_PADDING_BASE,
+      right: MAP_FIT_PADDING_BASE,
+      top: MAP_FIT_PADDING_BASE,
+    });
+  });
+});
 
 describe("panelRectToFitPadding", () => {
   it("uses left padding for desktop side-panel layout", () => {

@@ -17,6 +17,9 @@ import type {
   ExportContoursModalProps,
 } from "./index.types";
 
+const EXPORT_ERROR_MESSAGE =
+  "Export failed. The selected contours could not be converted.";
+
 function parseContourIndex(value: string | undefined): number | null {
   const index = Number(value);
   if (!Number.isInteger(index) || index < 0) {
@@ -45,6 +48,7 @@ export function ExportContoursModal({
   const [selectedFormat, setSelectedFormat] = useState<ContourExportFormat>(
     DEFAULT_EXPORT_FORMAT,
   );
+  const [exportError, setExportError] = useState<string | null>(null);
   const options = buildContourExportOptions(contours, profileLabel);
   const canExport = selectedIndices.size > 0;
 
@@ -54,6 +58,7 @@ export function ExportContoursModal({
       return;
     }
 
+    setExportError(null);
     setSelectedIndices((current) => {
       const next = new Set(current);
       if (next.has(index)) {
@@ -72,6 +77,7 @@ export function ExportContoursModal({
       return;
     }
 
+    setExportError(null);
     setSelectedFormat(format);
   }, []);
 
@@ -84,7 +90,12 @@ export function ExportContoursModal({
       data: contours,
     };
 
-    CONTOUR_EXPORTERS[selectedFormat].download(exportOptions);
+    try {
+      CONTOUR_EXPORTERS[selectedFormat].download(exportOptions);
+    } catch {
+      setExportError(EXPORT_ERROR_MESSAGE);
+      return;
+    }
 
     onClose();
   }, [contours, onClose, selectedFormat, selectedIndices]);
@@ -99,6 +110,7 @@ export function ExportContoursModal({
       title="Export contours"
     >
       <p className={styles.hint}>Select one or more contours to export.</p>
+      {exportError ? <p className={styles.error}>{exportError}</p> : null}
 
       <fieldset className={styles.tiles}>
         <legend className={styles.legend}>Contours</legend>

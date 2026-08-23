@@ -3,7 +3,7 @@ export interface AutocompleteProps {
   disabled?: boolean;
   id?: string;
   onChange: (value: string) => void;
-  onSelect: (value: string) => void;
+  onSelect: (index: number) => void;
   placeholder?: string;
   suggestions: string[];
   value: string;
@@ -13,6 +13,7 @@ export interface AutocompleteProps {
 export interface SuggestionItemProps {
   active: boolean;
   id: string;
-  onSelect: (value: string) => void;
+  index: number;
+  onSelect: (index: number) => void;
   suggestion: string;
 }

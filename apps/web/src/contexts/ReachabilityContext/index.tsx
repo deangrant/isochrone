@@ -1,5 +1,6 @@
 import { type ReactNode, useCallback, useContext, useMemo } from "react";
 import { useServices } from "@/contexts/ServicesContext";
+import type { MapViewState } from "@/types/reachability.types";
 import { computeBounds } from "@/utils/geo-bounds";
 import type {
   ReachabilityActions,
@@ -22,15 +23,20 @@ export interface ReachabilityProviderProps {
 export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
   const { geocoding, reachability } = useServices();
   const { settings, setSettings } = useReachabilitySettingsState();
-  const { boundsToFit, clearBoundsToFit, mapView, setBoundsToFit, setMapView } =
-    useReachabilityMapState();
+  const {
+    boundsToFit,
+    clearBoundsToFit,
+    mapView,
+    setBoundsToFit,
+    setMapView: setMapViewState,
+  } = useReachabilityMapState();
   const { clearGeocodingSuggestions, geocodingSuggestions } =
     useGeocodingSuggestions(geocoding, settings.locationQuery);
   const { origin, selectGeocodingSuggestion, setLocationQuery } =
     useReachabilityOrigin({
       clearGeocodingSuggestions,
       mapViewZoom: mapView.zoom,
-      setMapView,
+      setMapView: setMapViewState,
       setSettings,
     });
   const { calculate, calculating, error, result, resultTravelMode } =
@@ -51,6 +57,13 @@ export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
       setBoundsToFit(bounds);
     }
   }, [result, setBoundsToFit]);
+
+  const setMapView = useCallback(
+    (view: MapViewState) => {
+      setMapViewState(view);
+    },
+    [setMapViewState],
+  );
 
   const actions = useMemo<ReachabilityActions>(
     () => ({

@@ -21,7 +21,7 @@ export function useIsochronePanelHandlers(
   exclude: readonly ExcludeOptionValue[],
 ) {
   const handleCalculate = useCallback(() => {
-    actions.calculate().catch(() => undefined);
+    actions.calculate();
   }, [actions]);
 
   const handleTravelModeChange = useCallback(

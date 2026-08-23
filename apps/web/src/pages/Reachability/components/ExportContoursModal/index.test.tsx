@@ -173,4 +173,29 @@ describe("ExportContoursModal", () => {
     expect(downloadWkt).not.toHaveBeenCalled();
     expect(onClose).toHaveBeenCalledTimes(1);
   });
+
+  it("shows an inline error and keeps the modal open when export fails", () => {
+    const onClose = vi.fn();
+    vi.mocked(downloadGeoJson).mockImplementation(() => {
+      throw new Error("Invalid geometry");
+    });
+
+    render(
+      <ExportContoursModal
+        contours={CONTOURS}
+        onClose={onClose}
+        open
+        profileLabel="Driving"
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Export" }));
+
+    expect(
+      screen.getByText(
+        "Export failed. The selected contours could not be converted.",
+      ),
+    ).toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
+  });
 });

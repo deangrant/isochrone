@@ -1,4 +1,8 @@
-import { MAP_FIT_PADDING_BASE } from "@/constants/api.constants";
+import {
+  MAP_FIT_PADDING_BASE,
+  REACHABILITY_PANEL_INSET_PX,
+  REACHABILITY_SIDE_PANEL_MAX_WIDTH_PX,
+} from "@/constants/api.constants";
 
 /** Padding passed to Mapbox fitBounds. */
 export interface MapFitPadding {
@@ -26,6 +30,28 @@ const DEFAULT_PADDING: MapFitPadding = {
   right: MAP_FIT_PADDING_BASE,
   top: MAP_FIT_PADDING_BASE,
 };
+
+/**
+ * Returns best-effort fitBounds padding before the panel layout is measured.
+ * @param isBottomSheet Whether the panel is rendered as a bottom sheet.
+ */
+export function desktopSidePanelFallbackPadding(
+  isBottomSheet: boolean,
+): MapFitPadding {
+  if (isBottomSheet) {
+    return DEFAULT_PADDING;
+  }
+
+  return {
+    bottom: MAP_FIT_PADDING_BASE,
+    left:
+      REACHABILITY_PANEL_INSET_PX +
+      REACHABILITY_SIDE_PANEL_MAX_WIDTH_PX +
+      MAP_FIT_PADDING_BASE,
+    right: MAP_FIT_PADDING_BASE,
+    top: MAP_FIT_PADDING_BASE,
+  };
+}
 
 /**
  * Derives fitBounds padding from the settings panel layout.

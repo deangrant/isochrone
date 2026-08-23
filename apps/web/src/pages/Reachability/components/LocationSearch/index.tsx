@@ -18,8 +18,8 @@ export function LocationSearch({
   );
 
   const handleSelect = useCallback(
-    (label: string) => {
-      const match = suggestions.find((item) => item.label === label);
+    (index: number) => {
+      const match = suggestions[index];
       if (match) {
         onSelectSuggestion(match);
       }

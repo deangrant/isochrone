@@ -39,8 +39,8 @@ export function Autocomplete({
   );
 
   const handleSelect = useCallback(
-    (suggestion: string) => {
-      onSelect(suggestion);
+    (index: number) => {
+      onSelect(index);
       setOpen(false);
       setActiveIndex(-1);
     },
@@ -75,12 +75,8 @@ export function Autocomplete({
           if (!(open && activeOptionIndex >= 0)) {
             return;
           }
-          const suggestion = suggestions[activeOptionIndex];
-          if (!suggestion) {
-            return;
-          }
           event.preventDefault();
-          handleSelect(suggestion);
+          handleSelect(activeOptionIndex);
           return;
         }
         default: {
@@ -114,7 +110,8 @@ export function Autocomplete({
             <SuggestionItem
               active={index === activeOptionIndex}
               id={optionId(listId, index)}
-              key={suggestion}
+              index={index}
+              key={optionId(listId, index)}
               onSelect={handleSelect}
               suggestion={suggestion}
             />
@@ -154,12 +151,13 @@ function moveActive(
 function SuggestionItem({
   id,
   suggestion,
+  index,
   active,
   onSelect,
 }: SuggestionItemProps) {
   const handleClick = useCallback(() => {
-    onSelect(suggestion);
-  }, [onSelect, suggestion]);
+    onSelect(index);
+  }, [index, onSelect]);
 
   const handleMouseDown = useCallback(
     (event: ReactMouseEvent<HTMLDivElement>) => {
@@ -172,10 +170,10 @@ function SuggestionItem({
     (event: ReactKeyboardEvent<HTMLDivElement>) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        onSelect(suggestion);
+        onSelect(index);
       }
     },
-    [onSelect, suggestion],
+    [index, onSelect],
   );
 
   return (
