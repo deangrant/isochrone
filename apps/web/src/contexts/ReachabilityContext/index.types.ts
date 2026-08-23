@@ -62,7 +62,7 @@ export interface ReachabilityActions {
   calculate: () => Promise<void>;
   /** Clears pending boundsToFit without moving the map. */
   clearBoundsToFit: () => void;
-  /** Clears the start location, map contours, and calculation errors. */
+  /** Clears the start location, map contours, calculation errors, and panel settings. */
   clearLocation: () => void;
   /** Sets boundsToFit from the current result contours. */
   fitContoursBounds: () => void;

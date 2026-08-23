@@ -22,7 +22,8 @@ export interface ReachabilityProviderProps {
 /** Provides reachability state and actions to the page tree. */
 export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
   const { geocoding, reachability } = useServices();
-  const { settings, setSettings } = useReachabilitySettingsState();
+  const { settings, resetSettings, setSettings } =
+    useReachabilitySettingsState();
   const {
     boundsToFit,
     clearBoundsToFit,
@@ -73,6 +74,7 @@ export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
 
   const clearLocation = useCallback(() => {
     resetCalculation();
+    resetSettings();
     setLocationQuery("");
     clearGeocodingSuggestions();
     clearBoundsToFit();
@@ -80,6 +82,7 @@ export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
     clearBoundsToFit,
     clearGeocodingSuggestions,
     resetCalculation,
+    resetSettings,
     setLocationQuery,
   ]);
 

@@ -14,6 +14,7 @@ import {
   useReachability,
   useReachabilityMap,
 } from "@/contexts/ReachabilityContext";
+import { DEFAULT_SETTINGS } from "@/contexts/ReachabilityContext/use-reachability-settings-state";
 import { ServicesProvider } from "@/contexts/ServicesContext";
 import { IsochronePanel } from "@/pages/Reachability/components/IsochronePanel";
 import type { AppServices } from "@/services/app-services";
@@ -146,7 +147,7 @@ describe("reachability flow", () => {
     ]);
   });
 
-  it("clears the location, origin, and result when clearLocation runs", async () => {
+  it("clears the location, origin, result, and panel settings when clearLocation runs", async () => {
     const services = createServices();
 
     const { result } = renderHook(() => useReachability(), {
@@ -159,6 +160,15 @@ describe("reachability flow", () => {
 
     act(() => {
       result.current.actions.setLocationQuery("51.5, -0.12");
+      result.current.actions.setSettings({
+        denoise: 0.5,
+        departAt: "2026-01-01T08:00",
+        departAtEnabled: true,
+        exclude: ["toll"],
+        generalize: 100,
+        timeIntervals: [5, 15, 30],
+        travelMode: "bicycle",
+      });
     });
 
     await act(async () => {
@@ -172,7 +182,7 @@ describe("reachability flow", () => {
       result.current.actions.clearLocation();
     });
 
-    expect(result.current.state.settings.locationQuery).toBe("");
+    expect(result.current.state.settings).toEqual(DEFAULT_SETTINGS);
     expect(result.current.state.origin).toBeNull();
     expect(result.current.state.result).toBeNull();
     expect(result.current.state.error).toBeNull();
