@@ -4,6 +4,7 @@ import type { GeocodingSuggestion } from "@/types/geocoding.types";
 export interface LocationSearchProps {
   disabled?: boolean;
   id?: string;
+  onClearLocation: () => void;
   onQueryChange: (query: string) => void;
   onSelectSuggestion: (suggestion: GeocodingSuggestion) => void;
   placeholder?: string;

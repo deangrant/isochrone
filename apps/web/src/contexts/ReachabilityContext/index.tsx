@@ -22,7 +22,8 @@ export interface ReachabilityProviderProps {
 /** Provides reachability state and actions to the page tree. */
 export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
   const { geocoding, reachability } = useServices();
-  const { settings, setSettings } = useReachabilitySettingsState();
+  const { settings, setSettings, resetSettings } =
+    useReachabilitySettingsState();
   const {
     boundsToFit,
     clearBoundsToFit,
@@ -39,13 +40,19 @@ export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
       setMapView: setMapViewState,
       setSettings,
     });
-  const { calculate, calculating, error, result, resultTravelMode } =
-    useReachabilityCalculation({
-      origin,
-      reachability,
-      setBoundsToFit,
-      settings,
-    });
+  const {
+    calculate,
+    calculating,
+    error,
+    resetCalculation,
+    result,
+    resultTravelMode,
+  } = useReachabilityCalculation({
+    origin,
+    reachability,
+    setBoundsToFit,
+    settings,
+  });
 
   const fitContoursBounds = useCallback(() => {
     if (!result) {
@@ -65,11 +72,39 @@ export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
     [setMapViewState],
   );
 
+  const clearLocation = useCallback(() => {
+    resetCalculation();
+    setLocationQuery("");
+    clearGeocodingSuggestions();
+    clearBoundsToFit();
+  }, [
+    clearBoundsToFit,
+    clearGeocodingSuggestions,
+    resetCalculation,
+    setLocationQuery,
+  ]);
+
+  const resetPanel = useCallback(() => {
+    resetCalculation();
+    resetSettings();
+    setLocationQuery("");
+    clearGeocodingSuggestions();
+    clearBoundsToFit();
+  }, [
+    clearBoundsToFit,
+    clearGeocodingSuggestions,
+    resetCalculation,
+    resetSettings,
+    setLocationQuery,
+  ]);
+
   const actions = useMemo<ReachabilityActions>(
     () => ({
       calculate,
       clearBoundsToFit,
+      clearLocation,
       fitContoursBounds,
+      resetPanel,
       selectGeocodingSuggestion,
       setLocationQuery,
       setMapView,
@@ -78,7 +113,9 @@ export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
     [
       calculate,
       clearBoundsToFit,
+      clearLocation,
       fitContoursBounds,
+      resetPanel,
       selectGeocodingSuggestion,
       setLocationQuery,
       setSettings,
@@ -158,12 +195,16 @@ export function useReachabilitySettings() {
   const { state, actions } = useReachability();
   return {
     actions: {
+      clearLocation: actions.clearLocation,
+      resetPanel: actions.resetPanel,
       selectGeocodingSuggestion: actions.selectGeocodingSuggestion,
       setLocationQuery: actions.setLocationQuery,
       setSettings: actions.setSettings,
     },
     state: {
       geocodingSuggestions: state.geocodingSuggestions,
+      origin: state.origin,
+      result: state.result,
       settings: state.settings,
     },
   };

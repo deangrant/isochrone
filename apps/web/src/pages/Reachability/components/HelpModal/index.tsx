@@ -19,7 +19,7 @@ export function HelpModal({ open, onClose }: HelpModalProps) {
       open={open}
       panelClassName={styles.panel}
       showCloseButton={false}
-      title="Settings panel guide"
+      title="User guide"
     >
       <p className={styles.intro}>{REACHABILITY_HELP_INTRO}</p>
 

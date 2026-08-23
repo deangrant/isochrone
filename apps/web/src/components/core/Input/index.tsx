@@ -10,6 +10,7 @@ export function Input({
   disabled,
   onBlur,
   onChange,
+  onClear,
   onKeyDown,
   type = "text",
   autoComplete,
@@ -33,8 +34,13 @@ export function Input({
   );
 
   const handleClear = useCallback(() => {
+    if (onClear) {
+      onClear();
+      return;
+    }
+
     onChange("");
-  }, [onChange]);
+  }, [onChange, onClear]);
 
   const showClear = clearable && value.length > 0 && !disabled;
   const isCombobox = role === "combobox";

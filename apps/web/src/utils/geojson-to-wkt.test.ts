@@ -1,3 +1,4 @@
+import type { Feature } from "geojson";
 import { describe, expect, it } from "vitest";
 import { featureCollectionToWkt, geometryToWkt } from "@/utils/geojson-to-wkt";
 
@@ -94,5 +95,48 @@ describe("featureCollectionToWkt", () => {
         type: "FeatureCollection",
       }),
     ).toThrow("At least one feature is required for WKT export.");
+  });
+
+  it("throws when a single-feature collection has no geometry", () => {
+    expect(() =>
+      featureCollectionToWkt({
+        features: [
+          {
+            properties: {},
+            type: "Feature",
+          } as unknown as Feature,
+        ],
+        type: "FeatureCollection",
+      }),
+    ).toThrow("Feature geometry is required for WKT export.");
+  });
+});
+
+describe("geometryToWkt additional types", () => {
+  it("formats a multipolygon", () => {
+    expect(
+      geometryToWkt({
+        coordinates: [
+          [
+            [
+              [0, 0],
+              [1, 0],
+              [1, 1],
+              [0, 0],
+            ],
+          ],
+        ],
+        type: "MultiPolygon",
+      }),
+    ).toBe("MULTIPOLYGON (((0 0, 1 0, 1 1, 0 0)))");
+  });
+
+  it("throws for unsupported geometry types", () => {
+    expect(() =>
+      geometryToWkt({
+        coordinates: [],
+        type: "Unknown" as "Point",
+      }),
+    ).toThrow("Unsupported geometry type for WKT export.");
   });
 });

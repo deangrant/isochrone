@@ -6,6 +6,7 @@ import { Toggle } from "@/components/core/Toggle";
 import { DateTimePicker } from "@/components/patterns/DateTimePicker";
 import { FormField } from "@/components/patterns/FormField";
 import { supportsExcludeProfile } from "@/constants/exclude-options.constants";
+import { CLEAR_SEARCH_LABEL } from "@/constants/reachability-ui-copy";
 import {
   useReachabilityCalculationState,
   useReachabilitySettings,
@@ -39,6 +40,10 @@ export function IsochronePanel() {
   const excludeAvailable = supportsExcludeProfile(
     settingsState.settings.travelMode,
   );
+  const hasSearchToClear =
+    settingsState.settings.locationQuery.length > 0 ||
+    settingsState.origin !== null ||
+    settingsState.result !== null;
 
   return (
     <div className={styles.root}>
@@ -54,6 +59,7 @@ export function IsochronePanel() {
           <LocationSearch
             disabled={calculationState.calculating}
             id={locationId}
+            onClearLocation={settingsActions.clearLocation}
             onQueryChange={settingsActions.setLocationQuery}
             onSelectSuggestion={settingsActions.selectGeocodingSuggestion}
             placeholder="Search for a place or address"
@@ -166,6 +172,16 @@ export function IsochronePanel() {
               "Calculate"
             )}
           </Button>
+          {hasSearchToClear ? (
+            <Button
+              className={buttonStyles.fullWidth}
+              disabled={calculationState.calculating}
+              onClick={settingsActions.clearLocation}
+              variant="ghost"
+            >
+              {CLEAR_SEARCH_LABEL}
+            </Button>
+          ) : null}
         </div>
       </div>
     </div>

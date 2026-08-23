@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { CLEAR_SEARCH_LABEL } from "@/constants/reachability-ui-copy";
 import type { GeocodingSuggestion } from "@/types/geocoding.types";
 import { LocationSearch } from "./index";
 
@@ -14,14 +15,17 @@ const SUGGESTIONS: GeocodingSuggestion[] = [
 ];
 
 function LocationSearchHarness({
+  onClearLocation,
   onSelectSuggestion,
 }: {
+  onClearLocation?: () => void;
   onSelectSuggestion: (suggestion: GeocodingSuggestion) => void;
 }) {
   const [query, setQuery] = useState("");
 
   return (
     <LocationSearch
+      onClearLocation={onClearLocation ?? vi.fn()}
       onQueryChange={setQuery}
       onSelectSuggestion={onSelectSuggestion}
       query={query}
@@ -42,5 +46,24 @@ describe("LocationSearch", () => {
     fireEvent.click(options[1]);
 
     expect(onSelectSuggestion).toHaveBeenCalledWith(SUGGESTIONS[1]);
+  });
+
+  it("shows a clear button when the query has text and calls onClearLocation", () => {
+    const onClearLocation = vi.fn();
+    const onSelectSuggestion = vi.fn();
+
+    render(
+      <LocationSearch
+        onClearLocation={onClearLocation}
+        onQueryChange={vi.fn()}
+        onSelectSuggestion={onSelectSuggestion}
+        query="London"
+        suggestions={SUGGESTIONS}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: CLEAR_SEARCH_LABEL }));
+
+    expect(onClearLocation).toHaveBeenCalledTimes(1);
   });
 });

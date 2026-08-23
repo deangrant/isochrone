@@ -209,4 +209,48 @@ describe("ExportContoursModal", () => {
     expect(screen.getByText(EXPORT_FAILED_MESSAGE)).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
   });
+
+  it("shows an inline error when WKT export fails", () => {
+    const onClose = vi.fn();
+    vi.mocked(downloadWkt).mockImplementation(() => {
+      throw new Error("Invalid geometry");
+    });
+
+    render(
+      <ExportContoursModal
+        contours={CONTOURS}
+        onClose={onClose}
+        open
+        profileLabel="Driving"
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "WKT" }));
+    fireEvent.click(screen.getByRole("button", { name: "Download" }));
+
+    expect(screen.getByText(EXPORT_FAILED_MESSAGE)).toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it("shows an inline error when WKT export receives empty feature data", () => {
+    const onClose = vi.fn();
+    vi.mocked(downloadWkt).mockImplementation(() => {
+      throw new Error("At least one feature is required for WKT export.");
+    });
+
+    render(
+      <ExportContoursModal
+        contours={CONTOURS}
+        onClose={onClose}
+        open
+        profileLabel="Driving"
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "WKT" }));
+    fireEvent.click(screen.getByRole("button", { name: "Download" }));
+
+    expect(screen.getByText(EXPORT_FAILED_MESSAGE)).toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
+  });
 });

@@ -14,7 +14,10 @@ export function Autocomplete({
   suggestions,
   placeholder,
   disabled,
+  clearable = false,
+  clearLabel,
   onChange,
+  onClear,
   onSelect,
 }: AutocompleteProps) {
   const listId = useId();
@@ -95,10 +98,13 @@ export function Autocomplete({
         aria-controls={listId}
         aria-expanded={menuOpen}
         autoComplete="off"
+        clearable={clearable}
+        clearLabel={clearLabel}
         disabled={disabled}
         id={id}
         onBlur={closeMenu}
         onChange={handleChange}
+        onClear={onClear}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         role="combobox"

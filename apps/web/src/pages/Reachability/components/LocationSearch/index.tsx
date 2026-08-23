@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { Autocomplete } from "@/components/patterns/Autocomplete";
+import { CLEAR_SEARCH_LABEL } from "@/constants/reachability-ui-copy";
 import type { LocationSearchProps } from "./index.types";
 
 /** Renders a place search combobox backed by geocoding suggestions. */
@@ -10,6 +11,7 @@ export function LocationSearch({
   placeholder,
   disabled,
   onQueryChange,
+  onClearLocation,
   onSelectSuggestion,
 }: LocationSearchProps) {
   const labels = useMemo(
@@ -29,9 +31,12 @@ export function LocationSearch({
 
   return (
     <Autocomplete
+      clearable
+      clearLabel={CLEAR_SEARCH_LABEL}
       disabled={disabled}
       id={id}
       onChange={onQueryChange}
+      onClear={onClearLocation}
       onSelect={handleSelect}
       placeholder={placeholder}
       suggestions={labels}

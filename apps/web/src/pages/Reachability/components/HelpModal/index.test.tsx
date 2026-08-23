@@ -13,7 +13,7 @@ describe("HelpModal", () => {
 
     expect(screen.getByText(REACHABILITY_HELP_INTRO)).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: "Settings panel guide" }),
+      screen.getByRole("heading", { name: "User guide" }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: "Plan your trip" }),

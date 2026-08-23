@@ -1,7 +1,8 @@
 import { useCallback, useState } from "react";
 import type { ReachabilitySettings } from "./index.types";
 
-const DEFAULT_SETTINGS: ReachabilitySettings = {
+/** Default isochrone panel settings on first load. */
+export const DEFAULT_SETTINGS: ReachabilitySettings = {
   denoise: 0.1,
   departAt: "",
   departAtEnabled: false,
@@ -21,5 +22,9 @@ export function useReachabilitySettingsState() {
     setSettingsState((current) => ({ ...current, ...patch }));
   }, []);
 
-  return { setSettings, setSettingsState, settings };
+  const resetSettings = useCallback(() => {
+    setSettingsState(DEFAULT_SETTINGS);
+  }, []);
+
+  return { resetSettings, setSettings, setSettingsState, settings };
 }

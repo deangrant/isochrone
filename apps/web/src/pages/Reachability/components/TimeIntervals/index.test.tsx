@@ -16,6 +16,12 @@ describe("getNextUniqueInterval", () => {
     expect(getNextUniqueInterval([60])).toBe(1);
     expect(getNextUniqueInterval([58, 59])).toBe(60);
   });
+
+  it("returns null when every minute from 1 to 60 is already used", () => {
+    const allMinutes = Array.from({ length: 60 }, (_, index) => index + 1);
+
+    expect(getNextUniqueInterval(allMinutes)).toBeNull();
+  });
 });
 
 describe("getRowActions", () => {

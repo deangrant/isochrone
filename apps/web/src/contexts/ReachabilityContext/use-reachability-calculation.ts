@@ -46,6 +46,14 @@ export function useReachabilityCalculation({
     [],
   );
 
+  const resetCalculation = useCallback(() => {
+    abortRef.current?.abort();
+    setResult(null);
+    setResultTravelMode(null);
+    setError(null);
+    setCalculating(false);
+  }, []);
+
   const calculate = useCallback(async () => {
     if (!origin) {
       setError(MISSING_START_LOCATION_MESSAGE);
@@ -107,6 +115,7 @@ export function useReachabilityCalculation({
     calculate,
     calculating,
     error,
+    resetCalculation,
     result,
     resultTravelMode,
   };

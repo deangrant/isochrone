@@ -1,6 +1,11 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import type { FeatureCollection } from "geojson";
 import { describe, expect, it, vi } from "vitest";
+import {
+  INVALID_TRAVEL_MODE_MESSAGE,
+  MISSING_START_LOCATION_MESSAGE,
+} from "@/constants/reachability-ui-copy";
+import type { TravelMode } from "@/constants/travel-modes.constants";
 import type { ReachabilityOrigin } from "@/types/reachability.types";
 import type { IReachabilityClient } from "@/types/reachability-client.types";
 import type { ReachabilitySettings } from "./index.types";
@@ -61,16 +66,53 @@ function createReachabilityMock(
 function createOptions(
   reachability: IReachabilityClient,
   setBoundsToFit = vi.fn(),
+  origin: ReachabilityOrigin | null = ORIGIN,
+  settings: ReachabilitySettings = SETTINGS,
 ) {
   return {
-    origin: ORIGIN,
+    origin,
     reachability,
     setBoundsToFit,
-    settings: SETTINGS,
+    settings,
   };
 }
 
 describe("useReachabilityCalculation", () => {
+  it("sets an error when calculate runs without an origin", async () => {
+    const reachability = createReachabilityMock();
+
+    const { result } = renderHook(() =>
+      useReachabilityCalculation(createOptions(reachability, vi.fn(), null)),
+    );
+
+    await act(async () => {
+      await result.current.calculate();
+    });
+
+    expect(result.current.error).toBe(MISSING_START_LOCATION_MESSAGE);
+    expect(reachability.computeIsochrones).not.toHaveBeenCalled();
+  });
+
+  it("sets an error when the travel mode is invalid", async () => {
+    const reachability = createReachabilityMock();
+
+    const { result } = renderHook(() =>
+      useReachabilityCalculation(
+        createOptions(reachability, vi.fn(), ORIGIN, {
+          ...SETTINGS,
+          travelMode: "invalid" as TravelMode,
+        }),
+      ),
+    );
+
+    await act(async () => {
+      await result.current.calculate();
+    });
+
+    expect(result.current.error).toBe(INVALID_TRAVEL_MODE_MESSAGE);
+    expect(reachability.computeIsochrones).not.toHaveBeenCalled();
+  });
+
   it("aborts in-flight work on unmount without leaving calculating true", async () => {
     const deferred = createDeferred<FeatureCollection>();
     const reachability = createReachabilityMock(

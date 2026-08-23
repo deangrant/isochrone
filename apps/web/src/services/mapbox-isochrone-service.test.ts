@@ -193,4 +193,105 @@ describe("MapboxIsochroneService", () => {
 
     vi.unstubAllGlobals();
   });
+
+  it("throws when no contours are provided", async () => {
+    const service = new MapboxIsochroneService("pk.test");
+
+    await expect(
+      service.computeIsochrones({
+        contours: [],
+        origin: { lat: 51.5, lon: -0.12 },
+        profile: "mapbox/driving",
+      }),
+    ).rejects.toThrow("At least one contour is required.");
+  });
+
+  it("throws with the API error message when the request fails", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      json: async () => ({ message: "Invalid token" }),
+      ok: false,
+      status: 401,
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const service = new MapboxIsochroneService("pk.test");
+
+    await expect(
+      service.computeIsochrones({
+        contours: [{ color: "a8e6cf", time: 10 }],
+        origin: { lat: 51.5, lon: -0.12 },
+        profile: "mapbox/driving",
+      }),
+    ).rejects.toThrow("Invalid token");
+
+    vi.unstubAllGlobals();
+  });
+
+  it("throws a status-only message when the error body is not JSON", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      json: () => Promise.reject(new Error("Not JSON")),
+      ok: false,
+      status: 500,
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const service = new MapboxIsochroneService("pk.test");
+
+    await expect(
+      service.computeIsochrones({
+        contours: [{ color: "a8e6cf", time: 10 }],
+        origin: { lat: 51.5, lon: -0.12 },
+        profile: "mapbox/driving",
+      }),
+    ).rejects.toThrow("Isochrone request failed (500).");
+
+    vi.unstubAllGlobals();
+  });
+
+  it("throws when the response is not a feature collection", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      json: async () => ({ type: "NotAFeatureCollection" }),
+      ok: true,
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const service = new MapboxIsochroneService("pk.test");
+
+    await expect(
+      service.computeIsochrones({
+        contours: [{ color: "a8e6cf", time: 10 }],
+        origin: { lat: 51.5, lon: -0.12 },
+        profile: "mapbox/driving",
+      }),
+    ).rejects.toThrow("Unexpected response format from Mapbox Isochrone API.");
+
+    vi.unstubAllGlobals();
+  });
+
+  it("passes the abort signal to fetch", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockRejectedValue(new DOMException("Aborted", "AbortError"));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const service = new MapboxIsochroneService("pk.test");
+    const controller = new AbortController();
+    controller.abort();
+
+    await expect(
+      service.computeIsochrones(
+        {
+          contours: [{ color: "a8e6cf", time: 10 }],
+          origin: { lat: 51.5, lon: -0.12 },
+          profile: "mapbox/driving",
+        },
+        controller.signal,
+      ),
+    ).rejects.toThrow();
+
+    const [, requestInit] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(requestInit.signal).toBe(controller.signal);
+
+    vi.unstubAllGlobals();
+  });
 });

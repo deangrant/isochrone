@@ -31,3 +31,6 @@ export const DUPLICATE_TRAVEL_TIMES_MESSAGE =
 /** User-visible error when a travel time is outside the allowed range. */
 export const TRAVEL_TIME_RANGE_MESSAGE =
   "Enter a travel time between 1 and 60 minutes.";
+
+/** Accessible label for clearing the start location search field. */
+export const CLEAR_SEARCH_LABEL = "Clear Search";

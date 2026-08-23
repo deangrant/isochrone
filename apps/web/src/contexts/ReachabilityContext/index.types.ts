@@ -62,8 +62,12 @@ export interface ReachabilityActions {
   calculate: () => Promise<void>;
   /** Clears pending boundsToFit without moving the map. */
   clearBoundsToFit: () => void;
+  /** Clears the start location, map contours, and calculation errors. */
+  clearLocation: () => void;
   /** Sets boundsToFit from the current result contours. */
   fitContoursBounds: () => void;
+  /** Restores default settings and clears location, results, and errors. */
+  resetPanel: () => void;
   /** Applies a geocoding suggestion to origin and location query. */
   selectGeocodingSuggestion: (suggestion: GeocodingSuggestion) => void;
   /** Updates the location search field and triggers geocoding. */

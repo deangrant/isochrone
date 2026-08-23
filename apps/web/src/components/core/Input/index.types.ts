@@ -16,6 +16,7 @@ export interface InputProps {
   min?: number | string;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   onChange: (value: string) => void;
+  onClear?: () => void;
   onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
   role?: "combobox";
