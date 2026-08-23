@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 
 /** Props for the shared Modal dialog shell. */
 export interface ModalProps {
+  /** Optional class name applied to the dialog body container. */
+  bodyClassName?: string;
   /** Dialog body content. */
   children: ReactNode;
   /** When true, clicking the backdrop dismisses the dialog. Defaults to true. */
@@ -15,6 +17,8 @@ export interface ModalProps {
   onClose: () => void;
   /** When true the dialog is visible. */
   open: boolean;
+  /** Optional class name applied to the dialog panel container. */
+  panelClassName?: string;
   /** When true, shows the header close control. Defaults to true. */
   showCloseButton?: boolean;
   /** Accessible title announced by assistive tech. */

@@ -13,6 +13,8 @@ export function Modal({
   children,
   closeOnEscape = true,
   closeOnBackdrop = true,
+  panelClassName,
+  bodyClassName,
   showCloseButton = true,
 }: ModalProps) {
   const generatedTitleId = useId();
@@ -78,7 +80,7 @@ export function Modal({
           type="button"
         />
       ) : null}
-      <div className={styles.panel}>
+      <div className={[styles.panel, panelClassName].filter(Boolean).join(" ")}>
         <div className={styles.header}>
           <h2 className={styles.title} id={resolvedTitleId}>
             {title}
@@ -94,7 +96,9 @@ export function Modal({
             </button>
           ) : null}
         </div>
-        <div className={styles.body}>{children}</div>
+        <div className={[styles.body, bodyClassName].filter(Boolean).join(" ")}>
+          {children}
+        </div>
       </div>
     </dialog>,
     document.body,

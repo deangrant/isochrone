@@ -14,6 +14,11 @@ const ExportContoursModal = lazy(async () => {
   return { default: module.ExportContoursModal };
 });
 
+const HelpModal = lazy(async () => {
+  const module = await import("@/pages/Reachability/components/HelpModal");
+  return { default: module.HelpModal };
+});
+
 /** Renders the Mapbox GL map with reachability contours and origin marker. */
 export function MapView({
   mapView,
@@ -29,6 +34,7 @@ export function MapView({
 }: MapViewProps) {
   const [exportModalOpen, setExportModalOpen] = useState(false);
   const [exportModalKey, setExportModalKey] = useState(0);
+  const [helpModalOpen, setHelpModalOpen] = useState(false);
   const accessToken = mapboxAccessToken;
   const hasContours = contours !== null && contours.features.length > 0;
   const profileLabel = getTravelModeLabel(resultTravelMode ?? "car");
@@ -53,6 +59,14 @@ export function MapView({
     setExportModalOpen(false);
   }, []);
 
+  const handleOpenHelpModal = useCallback(() => {
+    setHelpModalOpen(true);
+  }, []);
+
+  const handleCloseHelpModal = useCallback(() => {
+    setHelpModalOpen(false);
+  }, []);
+
   if (!accessToken) {
     return (
       <div className={styles.root}>
@@ -67,11 +81,16 @@ export function MapView({
   return (
     <div className={styles.root}>
       <div className={styles.mapCanvas} ref={containerRef} />
-      {hasContours ? (
-        <MapControls
-          onExport={handleOpenExportModal}
-          onFitContours={onFitContours}
-        />
+      <MapControls
+        onExport={handleOpenExportModal}
+        onFitContours={onFitContours}
+        onHelp={handleOpenHelpModal}
+        showResultControls={hasContours}
+      />
+      {helpModalOpen ? (
+        <Suspense fallback={null}>
+          <HelpModal onClose={handleCloseHelpModal} open />
+        </Suspense>
       ) : null}
       {exportModalOpen && contours ? (
         <Suspense fallback={null}>
