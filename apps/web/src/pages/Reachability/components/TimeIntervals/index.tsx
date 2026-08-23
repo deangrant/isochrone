@@ -59,11 +59,11 @@ function IntervalRow({
         <div className={styles.actions}>
           {showRemove ? (
             <Button
-              aria-label={`Remove interval ${index + 1}`}
+              aria-label={`Remove travel time ${index + 1}`}
               className={styles.action}
               disabled={disabled}
               onClick={handleRemove}
-              title="Remove interval"
+              title="Remove travel time"
               variant="secondary"
             >
               ×
@@ -71,11 +71,11 @@ function IntervalRow({
           ) : null}
           {showAdd ? (
             <Button
-              aria-label="Add interval"
+              aria-label="Add travel time"
               className={styles.action}
               disabled={disabled}
               onClick={onAdd}
-              title="Add interval"
+              title="Add travel time"
               variant="secondary"
             >
               +

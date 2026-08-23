@@ -21,7 +21,7 @@ export function TravelModeTiles({
   );
 
   return (
-    <div aria-label="Routing profile" className={styles.root} role="radiogroup">
+    <div aria-label="Travel mode" className={styles.root} role="radiogroup">
       {TRAVEL_MODE_OPTIONS.map((option) => {
         const selected = option.value === value;
         const inputId = `travel-mode-${option.value}`;

@@ -8,6 +8,8 @@ export type ExcludeOptionValue =
 
 /** One selectable road-type exclusion for driving profiles. */
 export interface ExcludeOption {
+  /** Accessible label for the exclude toggle. */
+  ariaLabel: string;
   /** User-facing title. */
   label: string;
   /** Mapbox exclude value. */
@@ -16,11 +18,31 @@ export interface ExcludeOption {
 
 /** Driving-profile exclude options supported by the Mapbox Isochrone API. */
 export const EXCLUDE_OPTIONS: readonly ExcludeOption[] = [
-  { label: "Motorway", value: "motorway" },
-  { label: "Toll", value: "toll" },
-  { label: "Ferry", value: "ferry" },
-  { label: "Unpaved", value: "unpaved" },
-  { label: "Cash only tolls", value: "cash_only_tolls" },
+  {
+    ariaLabel: "Avoid motorways",
+    label: "Motorway",
+    value: "motorway",
+  },
+  {
+    ariaLabel: "Avoid toll roads",
+    label: "Toll",
+    value: "toll",
+  },
+  {
+    ariaLabel: "Avoid ferries",
+    label: "Ferry",
+    value: "ferry",
+  },
+  {
+    ariaLabel: "Avoid unpaved roads",
+    label: "Unpaved",
+    value: "unpaved",
+  },
+  {
+    ariaLabel: "Avoid cash-only tolls",
+    label: "Cash-only tolls",
+    value: "cash_only_tolls",
+  },
 ] as const;
 
 /**

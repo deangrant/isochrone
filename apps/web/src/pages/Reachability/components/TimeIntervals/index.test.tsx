@@ -41,9 +41,9 @@ describe("TimeIntervals", () => {
 
     render(<TimeIntervals intervals={[5, 10]} onChange={onChange} />);
 
-    expect(screen.getByLabelText("Remove interval 2")).toBeInTheDocument();
+    expect(screen.getByLabelText("Remove travel time 2")).toBeInTheDocument();
 
-    fireEvent.click(screen.getByLabelText("Remove interval 2"));
+    fireEvent.click(screen.getByLabelText("Remove travel time 2"));
 
     expect(onChange).toHaveBeenCalledWith([5]);
   });
@@ -69,7 +69,7 @@ describe("TimeIntervals", () => {
 
     fireEvent.click(
       container.querySelector(
-        'button[aria-label="Add interval"]',
+        'button[aria-label="Add travel time"]',
       ) as HTMLButtonElement,
     );
 

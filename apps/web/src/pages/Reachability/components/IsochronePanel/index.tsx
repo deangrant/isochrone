@@ -43,26 +43,26 @@ export function IsochronePanel() {
   return (
     <div className={styles.root}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Isochrones</h1>
+        <h1 className={styles.title}>Travel reach</h1>
         <p className={styles.subtitle}>
-          See how far you can travel within selected time limits.
+          See where you can go within the travel times you choose.
         </p>
       </header>
 
       <div className={styles.body}>
-        <FormField htmlFor={locationId} label="Location">
+        <FormField htmlFor={locationId} label="Start location">
           <LocationSearch
             disabled={calculationState.calculating}
             id={locationId}
             onQueryChange={settingsActions.setLocationQuery}
             onSelectSuggestion={settingsActions.selectGeocodingSuggestion}
-            placeholder="Search"
+            placeholder="Search for a place or address"
             query={settingsState.settings.locationQuery}
             suggestions={settingsState.geocodingSuggestions}
           />
         </FormField>
 
-        <FormField label="Routing profile">
+        <FormField label="Travel mode">
           <TravelModeTiles
             disabled={calculationState.calculating}
             onChange={handlers.handleTravelModeChange}
@@ -70,7 +70,7 @@ export function IsochronePanel() {
           />
         </FormField>
 
-        <FormField label="Time intervals (min)">
+        <FormField label="Travel times (minutes)">
           <TimeIntervals
             disabled={calculationState.calculating}
             intervals={settingsState.settings.timeIntervals}
@@ -78,7 +78,7 @@ export function IsochronePanel() {
           />
         </FormField>
 
-        <FormField htmlFor={denoiseId} label="Denoise">
+        <FormField htmlFor={denoiseId} label="Contour smoothing">
           <div className={styles.sliderRow}>
             <input
               className={styles.slider}
@@ -97,7 +97,7 @@ export function IsochronePanel() {
           </div>
         </FormField>
 
-        <FormField htmlFor={generalizeId} label="Generalize">
+        <FormField htmlFor={generalizeId} label="Shape simplification">
           <div className={styles.sliderRow}>
             <input
               className={styles.slider}
@@ -118,9 +118,9 @@ export function IsochronePanel() {
 
         <div className={styles.departAtSection}>
           <div className={styles.departAtHeader}>
-            <span className={styles.departAtLabel}>Depart at</span>
+            <span className={styles.departAtLabel}>Departure time</span>
             <Toggle
-              aria-label="Depart at"
+              aria-label="Departure time"
               checked={settingsState.settings.departAtEnabled}
               disabled={calculationState.calculating}
               id={departAtEnabledId}
@@ -133,6 +133,7 @@ export function IsochronePanel() {
               disabled={calculationState.calculating}
               id={departAtId}
               onChange={handlers.handleDepartAtChange}
+              placeholder="Select departure date and time"
               value={settingsState.settings.departAt}
             />
           ) : null}
@@ -140,7 +141,7 @@ export function IsochronePanel() {
 
         {excludeAvailable ? (
           <div className={styles.excludeSection}>
-            <span className={styles.sectionLabel}>Exclude</span>
+            <span className={styles.sectionLabel}>Avoid on route</span>
             <ExcludeOptions
               disabled={calculationState.calculating}
               onToggle={handlers.handleExcludeToggle}

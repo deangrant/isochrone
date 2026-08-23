@@ -1,4 +1,10 @@
 import { describe, expect, it } from "vitest";
+import {
+  DUPLICATE_TRAVEL_TIMES_MESSAGE,
+  MAX_TRAVEL_TIMES_MESSAGE,
+  MISSING_TRAVEL_TIME_MESSAGE,
+  TRAVEL_TIME_RANGE_MESSAGE,
+} from "@/constants/reachability-ui-copy";
 import { buildContours } from "@/utils/build-contours";
 
 describe("buildContours", () => {
@@ -17,32 +23,26 @@ describe("buildContours", () => {
   });
 
   it("throws when no intervals are provided", () => {
-    expect(() => buildContours([])).toThrow(
-      "At least one time interval is required.",
-    );
+    expect(() => buildContours([])).toThrow(MISSING_TRAVEL_TIME_MESSAGE);
   });
 
   it("throws when more than three intervals are provided", () => {
     expect(() => buildContours([5, 10, 15, 20])).toThrow(
-      "At most 3 time intervals are allowed.",
+      MAX_TRAVEL_TIMES_MESSAGE,
     );
   });
 
   it("throws when an interval is out of range", () => {
-    expect(() => buildContours([0])).toThrow(
-      "Each time interval must be between 1 and 60 minutes.",
-    );
-    expect(() => buildContours([61])).toThrow(
-      "Each time interval must be between 1 and 60 minutes.",
-    );
+    expect(() => buildContours([0])).toThrow(TRAVEL_TIME_RANGE_MESSAGE);
+    expect(() => buildContours([61])).toThrow(TRAVEL_TIME_RANGE_MESSAGE);
   });
 
   it("throws when intervals are duplicated", () => {
     expect(() => buildContours([10, 10])).toThrow(
-      "Time intervals must be unique.",
+      DUPLICATE_TRAVEL_TIMES_MESSAGE,
     );
     expect(() => buildContours([5, 10, 10])).toThrow(
-      "Time intervals must be unique.",
+      DUPLICATE_TRAVEL_TIMES_MESSAGE,
     );
   });
 });

@@ -42,6 +42,6 @@ export const TRAVEL_MODE_OPTIONS: readonly TravelModeOption[] = [
 export function getTravelModeLabel(mode: TravelMode): string {
   return (
     TRAVEL_MODE_OPTIONS.find((option) => option.value === mode)?.label ??
-    "Unknown profile"
+    "Unknown travel mode"
   );
 }

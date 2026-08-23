@@ -52,7 +52,7 @@ export function ReachabilityLayout() {
       </section>
 
       <aside
-        aria-label="Isochrone settings"
+        aria-label="Travel reach settings"
         className={styles.sidePanel}
         ref={panelRef}
         style={

@@ -11,12 +11,12 @@ export interface ContourExportFormatOption {
 export const EXPORT_FORMAT_OPTIONS: readonly ContourExportFormatOption[] = [
   {
     format: "geojson",
-    hint: "Feature collection for web maps and GIS tools",
+    hint: "Best for web maps and GIS apps",
     label: "GeoJSON",
   },
   {
     format: "wkt",
-    hint: "Well-Known Text for GIS and spatial tools",
+    hint: "Best for GIS and spatial databases",
     label: "WKT",
   },
 ] as const;

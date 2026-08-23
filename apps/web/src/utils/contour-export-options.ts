@@ -37,8 +37,8 @@ export function buildContourExportOptions(
     const contourMinutes = feature.properties?.contour;
     const minutesLabel =
       typeof contourMinutes === "number"
-        ? `${contourMinutes} min`
-        : "time interval unknown";
+        ? `${contourMinutes} minutes`
+        : "travel time unknown";
 
     return {
       index,

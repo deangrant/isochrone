@@ -32,10 +32,10 @@ export function MapControls({ onExport, onFitContours }: MapControlsProps) {
         </svg>
       </button>
       <button
-        aria-label="Export contours"
+        aria-label="Export travel areas"
         className={styles.mapControl}
         onClick={onExport}
-        title="Export contours"
+        title="Export travel areas"
         type="button"
       >
         <svg

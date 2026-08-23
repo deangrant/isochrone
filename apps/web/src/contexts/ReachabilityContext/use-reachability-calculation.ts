@@ -2,6 +2,11 @@ import type { FeatureCollection } from "geojson";
 import type { Dispatch, SetStateAction } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
+  INVALID_TRAVEL_MODE_MESSAGE,
+  MISSING_START_LOCATION_MESSAGE,
+  REACH_CALCULATION_FAILED_MESSAGE,
+} from "@/constants/reachability-ui-copy";
+import {
   TRAVEL_MODE_OPTIONS,
   type TravelMode,
 } from "@/constants/travel-modes.constants";
@@ -43,7 +48,7 @@ export function useReachabilityCalculation({
 
   const calculate = useCallback(async () => {
     if (!origin) {
-      setError("Set a start location before calculating.");
+      setError(MISSING_START_LOCATION_MESSAGE);
       return;
     }
 
@@ -51,7 +56,7 @@ export function useReachabilityCalculation({
       (option) => option.value === settings.travelMode,
     );
     if (!travelOption) {
-      setError("Select a valid travel mode.");
+      setError(INVALID_TRAVEL_MODE_MESSAGE);
       return;
     }
 
@@ -90,7 +95,7 @@ export function useReachabilityCalculation({
         return;
       }
 
-      setError("Calculation failed.");
+      setError(REACH_CALCULATION_FAILED_MESSAGE);
     } finally {
       if (!controller.signal.aborted) {
         setCalculating(false);

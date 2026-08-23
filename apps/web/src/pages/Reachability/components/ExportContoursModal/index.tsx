@@ -6,6 +6,7 @@ import {
   DEFAULT_EXPORT_FORMAT,
   EXPORT_FORMAT_OPTIONS,
 } from "@/constants/contour-export.constants";
+import { EXPORT_FAILED_MESSAGE } from "@/constants/reachability-ui-copy";
 import { CONTOUR_EXPORTERS } from "@/pages/Reachability/utils/contour-exporters";
 import {
   allContourIndices,
@@ -17,8 +18,7 @@ import type {
   ExportContoursModalProps,
 } from "./index.types";
 
-const EXPORT_ERROR_MESSAGE =
-  "Export failed. The selected contours could not be converted.";
+const EXPORT_ERROR_MESSAGE = EXPORT_FAILED_MESSAGE;
 
 function parseContourIndex(value: string | undefined): number | null {
   const index = Number(value);
@@ -107,13 +107,15 @@ export function ExportContoursModal({
       onClose={onClose}
       open={open}
       showCloseButton={false}
-      title="Export contours"
+      title="Export travel areas"
     >
-      <p className={styles.hint}>Select one or more contours to export.</p>
+      <p className={styles.hint}>
+        Choose which travel-time areas to download and pick a file format.
+      </p>
       {exportError ? <p className={styles.error}>{exportError}</p> : null}
 
       <fieldset className={styles.tiles}>
-        <legend className={styles.legend}>Contours</legend>
+        <legend className={styles.legend}>Travel times</legend>
         {options.map((option) => {
           const isSelected = selectedIndices.has(option.index);
 
@@ -136,7 +138,7 @@ export function ExportContoursModal({
       </fieldset>
 
       <fieldset className={styles.tiles}>
-        <legend className={styles.legend}>Export type</legend>
+        <legend className={styles.legend}>File format</legend>
         {EXPORT_FORMAT_OPTIONS.map((option) => {
           const isSelected = selectedFormat === option.format;
 
@@ -164,7 +166,7 @@ export function ExportContoursModal({
           Cancel
         </Button>
         <Button disabled={!canExport} onClick={handleExport} variant="primary">
-          Export
+          Download
         </Button>
       </div>
     </Modal>

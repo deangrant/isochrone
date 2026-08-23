@@ -27,7 +27,9 @@ describe("MapControls", () => {
 
     render(<MapControls onExport={onExport} onFitContours={onFitContours} />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Export contours" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Export travel areas" }),
+    );
 
     expect(onExport).toHaveBeenCalledTimes(1);
     expect(onFitContours).not.toHaveBeenCalled();

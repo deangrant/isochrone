@@ -20,6 +20,7 @@ export function ExcludeOptions({
 
         return (
           <ExcludeOptionRow
+            ariaLabel={option.ariaLabel}
             checked={checked}
             disabled={disabled}
             inputId={inputId}
@@ -35,6 +36,7 @@ export function ExcludeOptions({
 }
 
 interface ExcludeOptionRowProps {
+  ariaLabel: string;
   checked: boolean;
   disabled: boolean;
   inputId: string;
@@ -46,6 +48,7 @@ interface ExcludeOptionRowProps {
 function ExcludeOptionRow({
   value,
   label,
+  ariaLabel,
   inputId,
   checked,
   disabled,
@@ -64,7 +67,7 @@ function ExcludeOptionRow({
         {label}
       </label>
       <Toggle
-        aria-label={`Exclude ${label.toLowerCase()}`}
+        aria-label={ariaLabel}
         checked={checked}
         disabled={disabled}
         id={inputId}

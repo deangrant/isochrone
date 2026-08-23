@@ -9,12 +9,12 @@ describe("export-format-options", () => {
     expect(EXPORT_FORMAT_OPTIONS).toEqual([
       {
         format: "geojson",
-        hint: "Feature collection for web maps and GIS tools",
+        hint: "Best for web maps and GIS apps",
         label: "GeoJSON",
       },
       {
         format: "wkt",
-        hint: "Well-Known Text for GIS and spatial tools",
+        hint: "Best for GIS and spatial databases",
         label: "WKT",
       },
     ]);

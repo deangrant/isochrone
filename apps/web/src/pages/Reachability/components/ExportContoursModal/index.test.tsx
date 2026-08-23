@@ -1,5 +1,6 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { EXPORT_FAILED_MESSAGE } from "@/constants/reachability-ui-copy";
 import { downloadGeoJson } from "@/services/geojson-download-service";
 import { downloadWkt } from "@/services/wkt-download-service";
 import { ExportContoursModal } from "./index";
@@ -61,13 +62,19 @@ describe("ExportContoursModal", () => {
       screen.getByRole("button", { name: "WKT", pressed: false }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Driving, 10 min", pressed: true }),
+      screen.getByRole("button", {
+        name: "Driving, 10 minutes",
+        pressed: true,
+      }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Driving, 20 min", pressed: true }),
+      screen.getByRole("button", {
+        name: "Driving, 20 minutes",
+        pressed: true,
+      }),
     ).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: "Export" }));
+    fireEvent.click(screen.getByRole("button", { name: "Download" }));
 
     expect(downloadGeoJson).toHaveBeenCalledWith(EXPORT_OPTIONS);
     expect(downloadWkt).not.toHaveBeenCalled();
@@ -87,7 +94,7 @@ describe("ExportContoursModal", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "WKT" }));
-    fireEvent.click(screen.getByRole("button", { name: "Export" }));
+    fireEvent.click(screen.getByRole("button", { name: "Download" }));
 
     expect(downloadWkt).toHaveBeenCalledWith(EXPORT_OPTIONS);
     expect(downloadGeoJson).not.toHaveBeenCalled();
@@ -106,8 +113,10 @@ describe("ExportContoursModal", () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Driving, 20 min" }));
-    fireEvent.click(screen.getByRole("button", { name: "Export" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Driving, 20 minutes" }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Download" }));
 
     expect(downloadGeoJson).toHaveBeenCalledWith({
       contourIndices: [0],
@@ -128,8 +137,10 @@ describe("ExportContoursModal", () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Driving, 10 min" }));
-    fireEvent.click(screen.getByRole("button", { name: "Export" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Driving, 10 minutes" }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Download" }));
 
     expect(downloadGeoJson).toHaveBeenCalledWith({
       contourIndices: [1],
@@ -149,10 +160,14 @@ describe("ExportContoursModal", () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Driving, 10 min" }));
-    fireEvent.click(screen.getByRole("button", { name: "Driving, 20 min" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Driving, 10 minutes" }),
+    );
+    fireEvent.click(
+      screen.getByRole("button", { name: "Driving, 20 minutes" }),
+    );
 
-    expect(screen.getByRole("button", { name: "Export" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Download" })).toBeDisabled();
   });
 
   it("closes without exporting when Cancel is clicked", () => {
@@ -189,13 +204,9 @@ describe("ExportContoursModal", () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Export" }));
+    fireEvent.click(screen.getByRole("button", { name: "Download" }));
 
-    expect(
-      screen.getByText(
-        "Export failed. The selected contours could not be converted.",
-      ),
-    ).toBeInTheDocument();
+    expect(screen.getByText(EXPORT_FAILED_MESSAGE)).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
   });
 });

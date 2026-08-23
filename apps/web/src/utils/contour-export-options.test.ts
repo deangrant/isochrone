@@ -27,11 +27,11 @@ describe("buildContourExportOptions", () => {
     expect(options).toHaveLength(2);
     expect(options[0]).toMatchObject({
       index: 0,
-      label: "Driving, 10 min",
+      label: "Driving, 10 minutes",
     });
     expect(options[1]).toMatchObject({
       index: 1,
-      label: "Driving, time interval unknown",
+      label: "Driving, travel time unknown",
     });
   });
 
@@ -61,9 +61,9 @@ describe("buildContourExportOptions", () => {
 
     expect(options.map((option) => option.index)).toEqual([0, 2, 1]);
     expect(options.map((option) => option.label)).toEqual([
-      "Driving, 10 min",
-      "Driving, 20 min",
-      "Driving, 30 min",
+      "Driving, 10 minutes",
+      "Driving, 20 minutes",
+      "Driving, 30 minutes",
     ]);
   });
 });

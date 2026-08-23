@@ -1,5 +1,9 @@
 import type { FeatureCollection } from "geojson";
 import { supportsExcludeProfile } from "@/constants/exclude-options.constants";
+import {
+  INVALID_SETTINGS_MESSAGE,
+  REACH_CALCULATION_FAILED_MESSAGE,
+} from "@/constants/reachability-ui-copy";
 import type { ReachabilityOrigin } from "@/types/reachability.types";
 import type { IReachabilityClient } from "@/types/reachability-client.types";
 import { buildContours, type ContourSpec } from "@/utils/build-contours";
@@ -41,7 +45,9 @@ export async function runReachabilityCalculation(
   } catch (buildError) {
     return {
       error:
-        buildError instanceof Error ? buildError.message : "Invalid settings.",
+        buildError instanceof Error
+          ? buildError.message
+          : INVALID_SETTINGS_MESSAGE,
       ok: false,
     };
   }
@@ -76,7 +82,9 @@ export async function runReachabilityCalculation(
 
     return {
       error:
-        calcError instanceof Error ? calcError.message : "Calculation failed.",
+        calcError instanceof Error
+          ? calcError.message
+          : REACH_CALCULATION_FAILED_MESSAGE,
       ok: false,
     };
   }
