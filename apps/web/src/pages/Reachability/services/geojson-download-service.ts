@@ -1,9 +1,8 @@
 import type { FeatureCollection } from "geojson";
-import { filterContours } from "@/utils/filter-contours";
-import { featureCollectionToWkt } from "@/utils/geojson-to-wkt";
+import { filterContours } from "@/pages/Reachability/utils/filter-contours";
 
-/** Options for WKT export. */
-export interface WktDownloadOptions {
+/** Options for GeoJSON export. */
+export interface GeoJsonDownloadOptions {
   /** Optional contour indices to export (0-based). */
   contourIndices?: readonly number[];
   /** Feature collection to download. */
@@ -11,30 +10,30 @@ export interface WktDownloadOptions {
 }
 
 /**
- * Triggers a browser download of a WKT file.
+ * Triggers a browser download of a GeoJSON file.
  * @param options Export data and optional contour index filter.
  */
-export function downloadWkt(options: WktDownloadOptions): void {
+export function downloadGeoJson(options: GeoJsonDownloadOptions): void {
   const collection =
     options.contourIndices === undefined
       ? options.data
       : filterContours(options.data, options.contourIndices);
 
-  const blob = new Blob([featureCollectionToWkt(collection)], {
-    type: "text/plain",
+  const blob = new Blob([JSON.stringify(collection, null, 2)], {
+    type: "application/geo+json",
   });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = buildWktFilename();
+  anchor.download = buildFilename();
   anchor.click();
   URL.revokeObjectURL(url);
 }
 
 /**
- * Builds a timestamped WKT export filename.
+ * Builds a timestamped export filename.
  */
-export function buildWktFilename(): string {
+export function buildFilename(): string {
   const stamp = new Date().toISOString().replace(/[:.]/g, "-");
-  return `reachability-${stamp}.wkt`;
+  return `reachability-${stamp}.geojson`;
 }

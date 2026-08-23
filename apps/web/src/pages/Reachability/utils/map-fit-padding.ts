@@ -2,7 +2,7 @@ import {
   MAP_FIT_PADDING_BASE,
   REACHABILITY_PANEL_INSET_PX,
   REACHABILITY_SIDE_PANEL_MAX_WIDTH_PX,
-} from "@/constants/api.constants";
+} from "@/pages/Reachability/constants/reachability-layout.constants";
 
 /** Padding passed to Mapbox fitBounds. */
 export interface MapFitPadding {

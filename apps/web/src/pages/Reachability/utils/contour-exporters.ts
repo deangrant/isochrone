@@ -1,12 +1,12 @@
-import type { ContourExportFormat } from "@/pages/Reachability/components/ExportContoursModal/index.types";
 import {
   downloadGeoJson,
   type GeoJsonDownloadOptions,
-} from "@/services/geojson-download-service";
+} from "@/pages/Reachability/services/geojson-download-service";
 import {
   downloadWkt,
   type WktDownloadOptions,
-} from "@/services/wkt-download-service";
+} from "@/pages/Reachability/services/wkt-download-service";
+import type { ContourExportFormat } from "@/pages/Reachability/types/export.types";
 
 type ContourExportOptions = GeoJsonDownloadOptions | WktDownloadOptions;
 

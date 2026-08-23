@@ -1,6 +1,6 @@
 import type { FeatureCollection } from "geojson";
-import type { ExcludeOptionValue } from "@/constants/exclude-options.constants";
-import type { TravelMode } from "@/constants/travel-modes.constants";
+import type { ExcludeOptionValue } from "@/pages/Reachability/constants/exclude-options.constants";
+import type { TravelMode } from "@/pages/Reachability/constants/travel-modes.constants";
 import type { GeocodingSuggestion } from "@/types/geocoding.types";
 
 /** Map camera state and geographic origin types re-exported for context consumers. */
@@ -66,8 +66,6 @@ export interface ReachabilityActions {
   clearLocation: () => void;
   /** Sets boundsToFit from the current result contours. */
   fitContoursBounds: () => void;
-  /** Restores default settings and clears location, results, and errors. */
-  resetPanel: () => void;
   /** Applies a geocoding suggestion to origin and location query. */
   selectGeocodingSuggestion: (suggestion: GeocodingSuggestion) => void;
   /** Updates the location search field and triggers geocoding. */

@@ -1,10 +1,10 @@
 import { type RefObject, useLayoutEffect, useState } from "react";
-import { REACHABILITY_LAYOUT_BREAKPOINT_PX } from "@/constants/api.constants";
+import { REACHABILITY_LAYOUT_BREAKPOINT_PX } from "@/pages/Reachability/constants/reachability-layout.constants";
 import {
   desktopSidePanelFallbackPadding,
   type MapFitPadding,
   panelRectToFitPadding,
-} from "@/utils/map-fit-padding";
+} from "@/pages/Reachability/utils/map-fit-padding";
 
 function isBottomSheetLayout(): boolean {
   return window.matchMedia(

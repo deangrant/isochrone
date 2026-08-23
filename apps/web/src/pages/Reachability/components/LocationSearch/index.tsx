@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { Autocomplete } from "@/components/patterns/Autocomplete";
-import { CLEAR_SEARCH_LABEL } from "@/constants/reachability-ui-copy";
+import { CLEAR_SEARCH_LABEL } from "@/pages/Reachability/constants/reachability-ui-copy";
 import type { LocationSearchProps } from "./index.types";
 
 /** Renders a place search combobox backed by geocoding suggestions. */

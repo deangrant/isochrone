@@ -4,8 +4,8 @@ import {
   MAX_TRAVEL_TIMES_MESSAGE,
   MISSING_TRAVEL_TIME_MESSAGE,
   TRAVEL_TIME_RANGE_MESSAGE,
-} from "@/constants/reachability-ui-copy";
-import { buildContours } from "@/utils/build-contours";
+} from "@/pages/Reachability/constants/reachability-ui-copy";
+import { buildContours } from "@/pages/Reachability/utils/build-contours";
 
 describe("buildContours", () => {
   it("builds sorted time contours with colors", () => {

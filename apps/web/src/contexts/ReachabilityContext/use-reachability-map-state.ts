@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { DEFAULT_MAP_VIEW } from "@/constants/api.constants";
+import { DEFAULT_MAP_VIEW } from "@/pages/Reachability/constants/reachability-layout.constants";
 import type { MapViewState } from "@/types/reachability.types";
 
 /** Manages map camera state and bounds-to-fit requests. */

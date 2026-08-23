@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { buildFilename } from "@/services/geojson-download-service";
-import { filterContours } from "@/utils/filter-contours";
+import { buildFilename } from "@/pages/Reachability/services/geojson-download-service";
+import { filterContours } from "@/pages/Reachability/utils/filter-contours";
 
 const GEOJSON_FILENAME_PATTERN = /^reachability-.+\.geojson$/;
 

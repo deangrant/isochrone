@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseCoordinates } from "@/utils/parse-coordinates";
+import { parseCoordinates } from "@/pages/Reachability/utils/parse-coordinates";
 
 describe("parseCoordinates", () => {
   it("parses comma-separated coordinates", () => {

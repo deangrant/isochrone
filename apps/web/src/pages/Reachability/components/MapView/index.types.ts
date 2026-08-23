@@ -1,10 +1,10 @@
 import type { FeatureCollection } from "geojson";
-import type { TravelMode } from "@/constants/travel-modes.constants";
+import type { TravelMode } from "@/pages/Reachability/constants/travel-modes.constants";
+import type { MapFitPadding } from "@/pages/Reachability/utils/map-fit-padding";
 import type {
   MapViewState,
   ReachabilityOrigin,
 } from "@/types/reachability.types";
-import type { MapFitPadding } from "@/utils/map-fit-padding";
 
 /** Props for the reachability MapView container. */
 export interface MapViewProps {
@@ -18,11 +18,11 @@ export interface MapViewProps {
   mapboxAccessToken: string;
   /** Current map center and zoom. */
   mapView: MapViewState;
-  /** Called after boundsToFit has been applied to the map. */
+  /** Notifies the parent after boundsToFit has been applied to the map. */
   onBoundsFitted: () => void;
-  /** Called when the user requests fitting the view to current contours. */
+  /** Notifies the parent when the user requests fitting the view to current contours. */
   onFitContours: () => void;
-  /** Called when the user pans or zooms the map. */
+  /** Notifies the parent when the user pans or zooms the map. */
   onViewChange: (view: MapViewState) => void;
   /** Origin point marker; null when unset. */
   origin: ReachabilityOrigin | null;

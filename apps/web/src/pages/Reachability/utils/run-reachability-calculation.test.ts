@@ -1,12 +1,12 @@
 import type { FeatureCollection } from "geojson";
 import { describe, expect, it, vi } from "vitest";
-import { MISSING_TRAVEL_TIME_MESSAGE } from "@/constants/reachability-ui-copy";
+import type { ReachabilitySettings } from "@/contexts/ReachabilityContext/index.types";
+import { MISSING_TRAVEL_TIME_MESSAGE } from "@/pages/Reachability/constants/reachability-ui-copy";
 import type { ReachabilityOrigin } from "@/types/reachability.types";
 import type {
   IReachabilityClient,
   ReachabilityRequest,
 } from "@/types/reachability-client.types";
-import type { ReachabilitySettings } from "./index.types";
 import { runReachabilityCalculation } from "./run-reachability-calculation";
 
 const ORIGIN: ReachabilityOrigin = { lat: 51.5, lon: -0.12 };

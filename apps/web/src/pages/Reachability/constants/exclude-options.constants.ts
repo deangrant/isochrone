@@ -44,13 +44,3 @@ export const EXCLUDE_OPTIONS: readonly ExcludeOption[] = [
     value: "cash_only_tolls",
   },
 ] as const;
-
-/**
- * Returns whether the travel mode supports Mapbox exclude parameters.
- * @param travelMode Selected routing profile.
- */
-export function supportsExcludeProfile(
-  travelMode: "bicycle" | "car" | "pedestrian" | "traffic",
-): boolean {
-  return travelMode === "car" || travelMode === "traffic";
-}

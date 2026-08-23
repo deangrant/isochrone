@@ -5,13 +5,13 @@ import { Modal } from "@/components/core/Modal";
 import {
   DEFAULT_EXPORT_FORMAT,
   EXPORT_FORMAT_OPTIONS,
-} from "@/constants/contour-export.constants";
-import { EXPORT_FAILED_MESSAGE } from "@/constants/reachability-ui-copy";
-import { CONTOUR_EXPORTERS } from "@/pages/Reachability/utils/contour-exporters";
+} from "@/pages/Reachability/constants/contour-export.constants";
+import { EXPORT_FAILED_MESSAGE } from "@/pages/Reachability/constants/reachability-ui-copy";
 import {
   allContourIndices,
   buildContourExportOptions,
-} from "@/utils/contour-export-options";
+} from "@/pages/Reachability/utils/contour-export-options";
+import { CONTOUR_EXPORTERS } from "@/pages/Reachability/utils/contour-exporters";
 import styles from "./index.module.css";
 import type {
   ContourExportFormat,

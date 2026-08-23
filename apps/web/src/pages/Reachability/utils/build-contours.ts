@@ -1,24 +1,17 @@
 import {
   CONTOUR_COLORS,
   MAX_CONTOUR_COUNT,
-} from "@/constants/contours.constants";
+} from "@/pages/Reachability/constants/contours.constants";
 import {
   DUPLICATE_TRAVEL_TIMES_MESSAGE,
   MAX_TRAVEL_TIMES_MESSAGE,
   MISSING_TRAVEL_TIME_MESSAGE,
   TRAVEL_TIME_RANGE_MESSAGE,
-} from "@/constants/reachability-ui-copy";
+} from "@/pages/Reachability/constants/reachability-ui-copy";
+import type { ContourSpec } from "@/types/reachability-client.types";
 
 /** Maximum allowed time interval in minutes. */
 export const MAX_TIME_INTERVAL_MINUTES = 60;
-
-/** One contour sent to the reachability API. */
-export interface ContourSpec {
-  /** Hex color without `#`. */
-  color: string;
-  /** Time in minutes. */
-  time: number;
-}
 
 /**
  * Builds contour specs from explicit time intervals in minutes.

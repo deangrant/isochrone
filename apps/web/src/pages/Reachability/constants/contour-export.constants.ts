@@ -1,4 +1,4 @@
-import type { ContourExportFormat } from "@/pages/Reachability/components/ExportContoursModal/index.types";
+import type { ContourExportFormat } from "@/pages/Reachability/types/export.types";
 
 /** One selectable contour export format. */
 export interface ContourExportFormatOption {

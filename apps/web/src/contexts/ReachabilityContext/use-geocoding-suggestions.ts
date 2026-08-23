@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { parseCoordinates } from "@/pages/Reachability/utils/parse-coordinates";
 import type { GeocodingSuggestion } from "@/types/geocoding.types";
 import type { IGeocodingService } from "@/types/geocoding-service.types";
-import { parseCoordinates } from "@/utils/parse-coordinates";
 
 /**
  * Debounces forward geocoding for a location search query.

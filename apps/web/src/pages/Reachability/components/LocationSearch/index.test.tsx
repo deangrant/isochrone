@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { CLEAR_SEARCH_LABEL } from "@/constants/reachability-ui-copy";
+import { CLEAR_SEARCH_LABEL } from "@/pages/Reachability/constants/reachability-ui-copy";
 import type { GeocodingSuggestion } from "@/types/geocoding.types";
 import { LocationSearch } from "./index";
 

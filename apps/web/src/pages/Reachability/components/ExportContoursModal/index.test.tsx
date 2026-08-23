@@ -1,8 +1,8 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { EXPORT_FAILED_MESSAGE } from "@/constants/reachability-ui-copy";
-import { downloadGeoJson } from "@/services/geojson-download-service";
-import { downloadWkt } from "@/services/wkt-download-service";
+import { EXPORT_FAILED_MESSAGE } from "@/pages/Reachability/constants/reachability-ui-copy";
+import { downloadGeoJson } from "@/pages/Reachability/services/geojson-download-service";
+import { downloadWkt } from "@/pages/Reachability/services/wkt-download-service";
 import { ExportContoursModal } from "./index";
 
 const CONTOURS = {
@@ -26,11 +26,11 @@ const EXPORT_OPTIONS = {
   data: CONTOURS,
 };
 
-vi.mock("@/services/geojson-download-service", () => ({
+vi.mock("@/pages/Reachability/services/geojson-download-service", () => ({
   downloadGeoJson: vi.fn(),
 }));
 
-vi.mock("@/services/wkt-download-service", () => ({
+vi.mock("@/pages/Reachability/services/wkt-download-service", () => ({
   downloadWkt: vi.fn(),
 }));
 

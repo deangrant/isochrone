@@ -1,14 +1,15 @@
 import { useCallback, useEffect, useId, useState } from "react";
 import { Button } from "@/components/core/Button";
 import { Input } from "@/components/core/Input";
+import { MAX_TIME_INTERVALS } from "@/pages/Reachability/constants/contours.constants";
+import { MAX_TIME_INTERVAL_MINUTES } from "@/pages/Reachability/utils/build-contours";
 import {
   getNextUniqueInterval,
   getRowActions,
   type IntervalRowActions,
 } from "@/pages/Reachability/utils/time-interval-row-actions";
-import { MAX_TIME_INTERVAL_MINUTES } from "@/utils/build-contours";
 import styles from "./index.module.css";
-import { MAX_TIME_INTERVALS, type TimeIntervalsProps } from "./index.types";
+import type { TimeIntervalsProps } from "./index.types";
 
 interface IntervalRowProps {
   actions: IntervalRowActions;

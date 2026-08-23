@@ -15,7 +15,10 @@ Follow these skills for all work in `apps/web/src`:
 
 - No component-layer barrel files under `components/`
 - Folder-per-component layout with direct imports
+- Page-only Reachability code under `pages/Reachability/{components,constants,utils,types,services}/`
+- Top-level `constants/` (`mapbox.constants.ts` only) and `utils/` (DateTimePicker helpers only)
 - Exported APIs use well-formed JSDoc with verb-phrase summaries for components
+- `utils/` and `constants/` must not import component `index.types`
 - Depend on service ports from `types/`, wire concretes only in `services/app-services.ts`
 - Pure helpers belong in `utils/` or `pages/<Page>/utils/`, not loose files under `components/**`
 

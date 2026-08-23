@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { REACHABILITY_HELP_INTRO } from "@/constants/reachability-help-content";
+import { REACHABILITY_HELP_INTRO } from "@/pages/Reachability/constants/reachability-help-content";
 import { HelpModal } from "./index";
 
 afterEach(() => {

@@ -1,5 +1,5 @@
-import { MAX_TIME_INTERVALS } from "@/pages/Reachability/components/TimeIntervals/index.types";
-import { MAX_TIME_INTERVAL_MINUTES } from "@/utils/build-contours";
+import { MAX_TIME_INTERVALS } from "@/pages/Reachability/constants/contours.constants";
+import { MAX_TIME_INTERVAL_MINUTES } from "@/pages/Reachability/utils/build-contours";
 
 /** Add/remove affordances for one time-interval row. */
 export interface IntervalRowActions {

@@ -19,8 +19,11 @@ All TypeScript work in `apps/web/src` must follow these project skills:
 
 - [ ] Components live in folder-per-component folders (`index.tsx`, `index.module.css`, `index.types.ts`)
 - [ ] Page-only UI stays under `pages/<Page>/components/` until reused
+- [ ] Page-only constants, utils, types, and services stay under `pages/<Page>/` (Reachability: `constants/`, `utils/`, `types/`, `services/`)
+- [ ] Top-level `constants/` is limited to app-wide values (`mapbox.constants.ts`); top-level `utils/` to shared DateTimePicker helpers
 - [ ] No component-layer barrels (`components/core/index.ts`, etc.)
 - [ ] Pure helpers live in `utils/` or `pages/<Page>/utils/`, not beside components
+- [ ] `utils/` and `constants/` must not import `components/**/index.types`
 - [ ] Service modules use `*-service.ts` naming
 
 ### SOLID

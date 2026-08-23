@@ -1,15 +1,18 @@
 import type { FeatureCollection } from "geojson";
-import { supportsExcludeProfile } from "@/constants/exclude-options.constants";
+import type { ReachabilitySettings } from "@/contexts/ReachabilityContext/index.types";
 import {
   INVALID_SETTINGS_MESSAGE,
   REACH_CALCULATION_FAILED_MESSAGE,
-} from "@/constants/reachability-ui-copy";
+} from "@/pages/Reachability/constants/reachability-ui-copy";
+import { travelModeSupportsExclude } from "@/pages/Reachability/constants/travel-modes.constants";
+import { buildContours } from "@/pages/Reachability/utils/build-contours";
+import { buildExcludeParam } from "@/pages/Reachability/utils/build-exclude-param";
+import { computeBounds } from "@/pages/Reachability/utils/geo-bounds";
 import type { ReachabilityOrigin } from "@/types/reachability.types";
-import type { IReachabilityClient } from "@/types/reachability-client.types";
-import { buildContours, type ContourSpec } from "@/utils/build-contours";
-import { buildExcludeParam } from "@/utils/build-exclude-param";
-import { computeBounds } from "@/utils/geo-bounds";
-import type { ReachabilitySettings } from "./index.types";
+import type {
+  ContourSpec,
+  IReachabilityClient,
+} from "@/types/reachability-client.types";
 
 /** Result of a reachability calculation attempt. */
 export type ReachabilityCalculationResult =
@@ -61,7 +64,7 @@ export async function runReachabilityCalculation(
           settings.departAtEnabled && settings.departAt
             ? settings.departAt
             : undefined,
-        exclude: supportsExcludeProfile(settings.travelMode)
+        exclude: travelModeSupportsExclude(settings.travelMode)
           ? buildExcludeParam(settings.exclude)
           : undefined,
         generalize: settings.generalize,

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useState } from "react";
-import { getTravelModeLabel } from "@/constants/travel-modes.constants";
+import { getTravelModeLabel } from "@/pages/Reachability/constants/travel-modes.constants";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "@/styles/mapbox-overrides.css";
 import { MapControls } from "@/pages/Reachability/components/MapControls";

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildWktFilename } from "@/services/wkt-download-service";
+import { buildWktFilename } from "@/pages/Reachability/services/wkt-download-service";
 
 const WKT_FILENAME_PATTERN = /^reachability-.+\.wkt$/;
 

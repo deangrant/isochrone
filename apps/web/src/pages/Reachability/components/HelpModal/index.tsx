@@ -4,7 +4,7 @@ import {
   getHelpTopicsForSection,
   REACHABILITY_HELP_INTRO,
   REACHABILITY_HELP_SECTIONS,
-} from "@/constants/reachability-help-content";
+} from "@/pages/Reachability/constants/reachability-help-content";
 import styles from "./index.module.css";
 import type { HelpModalProps } from "./index.types";
 

@@ -11,7 +11,7 @@ export interface ModalProps {
   /** When true, Escape dismisses the dialog. Defaults to true. */
   closeOnEscape?: boolean;
   /**
-   * Called when the dialog is dismissed (close button, backdrop, or Escape),
+   * Notifies the parent when the dialog is dismissed (close button, backdrop, or Escape),
    * when those affordances are enabled.
    */
   onClose: () => void;

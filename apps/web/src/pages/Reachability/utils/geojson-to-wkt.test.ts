@@ -1,6 +1,9 @@
 import type { Feature } from "geojson";
 import { describe, expect, it } from "vitest";
-import { featureCollectionToWkt, geometryToWkt } from "@/utils/geojson-to-wkt";
+import {
+  featureCollectionToWkt,
+  geometryToWkt,
+} from "@/pages/Reachability/utils/geojson-to-wkt";
 
 describe("geometryToWkt", () => {
   it("formats a polygon", () => {

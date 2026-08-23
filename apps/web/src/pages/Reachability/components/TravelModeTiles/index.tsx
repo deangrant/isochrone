@@ -1,9 +1,9 @@
 import { type ChangeEvent, useCallback } from "react";
+import { TravelModeIcon } from "@/pages/Reachability/components/TravelModeIcon";
 import {
   TRAVEL_MODE_OPTIONS,
   type TravelMode,
-} from "@/constants/travel-modes.constants";
-import { TravelModeIcon } from "@/pages/Reachability/components/TravelModeIcon";
+} from "@/pages/Reachability/constants/travel-modes.constants";
 import styles from "./index.module.css";
 import type { TravelModeTilesProps } from "./index.types";
 

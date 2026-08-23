@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import type { ChangeEvent } from "react";
 import { describe, expect, it, vi } from "vitest";
-import type { ExcludeOptionValue } from "@/constants/exclude-options.constants";
+import type { ExcludeOptionValue } from "@/pages/Reachability/constants/exclude-options.constants";
 import { useIsochronePanelHandlers } from "./use-isochrone-panel-handlers";
 
 const DATE_TIME_LOCAL_PATTERN = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;

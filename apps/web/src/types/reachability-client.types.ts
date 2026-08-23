@@ -1,6 +1,13 @@
 import type { FeatureCollection } from "geojson";
 import type { ReachabilityOrigin } from "@/types/reachability.types";
-import type { ContourSpec } from "@/utils/build-contours";
+
+/** One contour sent to the reachability API. */
+export interface ContourSpec {
+  /** Hex color without `#`. */
+  color: string;
+  /** Time in minutes. */
+  time: number;
+}
 
 /** Parameters for a reachability isochrone request. */
 export interface ReachabilityRequest {

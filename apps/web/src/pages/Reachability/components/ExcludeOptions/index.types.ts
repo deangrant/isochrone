@@ -1,4 +1,4 @@
-import type { ExcludeOptionValue } from "@/constants/exclude-options.constants";
+import type { ExcludeOptionValue } from "@/pages/Reachability/constants/exclude-options.constants";
 
 /** Props for the exclude option list. */
 export interface ExcludeOptionsProps {

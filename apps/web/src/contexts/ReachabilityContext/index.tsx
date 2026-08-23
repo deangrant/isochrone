@@ -1,7 +1,7 @@
 import { type ReactNode, useCallback, useContext, useMemo } from "react";
 import { useServices } from "@/contexts/ServicesContext";
+import { computeBounds } from "@/pages/Reachability/utils/geo-bounds";
 import type { MapViewState } from "@/types/reachability.types";
-import { computeBounds } from "@/utils/geo-bounds";
 import type {
   ReachabilityActions,
   ReachabilityContextValue,
@@ -22,8 +22,7 @@ export interface ReachabilityProviderProps {
 /** Provides reachability state and actions to the page tree. */
 export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
   const { geocoding, reachability } = useServices();
-  const { settings, setSettings, resetSettings } =
-    useReachabilitySettingsState();
+  const { settings, setSettings } = useReachabilitySettingsState();
   const {
     boundsToFit,
     clearBoundsToFit,
@@ -84,27 +83,12 @@ export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
     setLocationQuery,
   ]);
 
-  const resetPanel = useCallback(() => {
-    resetCalculation();
-    resetSettings();
-    setLocationQuery("");
-    clearGeocodingSuggestions();
-    clearBoundsToFit();
-  }, [
-    clearBoundsToFit,
-    clearGeocodingSuggestions,
-    resetCalculation,
-    resetSettings,
-    setLocationQuery,
-  ]);
-
   const actions = useMemo<ReachabilityActions>(
     () => ({
       calculate,
       clearBoundsToFit,
       clearLocation,
       fitContoursBounds,
-      resetPanel,
       selectGeocodingSuggestion,
       setLocationQuery,
       setMapView,
@@ -115,7 +99,6 @@ export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
       clearBoundsToFit,
       clearLocation,
       fitContoursBounds,
-      resetPanel,
       selectGeocodingSuggestion,
       setLocationQuery,
       setSettings,
@@ -196,7 +179,6 @@ export function useReachabilitySettings() {
   return {
     actions: {
       clearLocation: actions.clearLocation,
-      resetPanel: actions.resetPanel,
       selectGeocodingSuggestion: actions.selectGeocodingSuggestion,
       setLocationQuery: actions.setLocationQuery,
       setSettings: actions.setSettings,

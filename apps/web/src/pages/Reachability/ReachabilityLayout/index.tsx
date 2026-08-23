@@ -1,12 +1,12 @@
 import { type CSSProperties, lazy, Suspense, useEffect, useRef } from "react";
 import { Spinner } from "@/components/core/Spinner";
-import { REACHABILITY_SIDE_PANEL_MAX_WIDTH_PX } from "@/constants/api.constants";
 import { getMapboxAccessToken } from "@/constants/mapbox.constants";
 import {
   useReachabilityCalculationState,
   useReachabilityMap,
 } from "@/contexts/ReachabilityContext";
 import { IsochronePanel } from "@/pages/Reachability/components/IsochronePanel";
+import { REACHABILITY_SIDE_PANEL_MAX_WIDTH_PX } from "@/pages/Reachability/constants/reachability-layout.constants";
 import { useMapFitPadding } from "@/pages/Reachability/hooks/use-map-fit-padding";
 import styles from "./index.module.css";
 

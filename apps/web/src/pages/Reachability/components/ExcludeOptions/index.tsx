@@ -1,6 +1,6 @@
 import { type ChangeEvent, useCallback, useId } from "react";
 import { Toggle } from "@/components/core/Toggle";
-import { EXCLUDE_OPTIONS } from "@/constants/exclude-options.constants";
+import { EXCLUDE_OPTIONS } from "@/pages/Reachability/constants/exclude-options.constants";
 import styles from "./index.module.css";
 import type { ExcludeOptionsProps } from "./index.types";
 

@@ -5,8 +5,6 @@ import { Spinner } from "@/components/core/Spinner";
 import { Toggle } from "@/components/core/Toggle";
 import { DateTimePicker } from "@/components/patterns/DateTimePicker";
 import { FormField } from "@/components/patterns/FormField";
-import { supportsExcludeProfile } from "@/constants/exclude-options.constants";
-import { CLEAR_SEARCH_LABEL } from "@/constants/reachability-ui-copy";
 import {
   useReachabilityCalculationState,
   useReachabilitySettings,
@@ -15,6 +13,8 @@ import { ExcludeOptions } from "@/pages/Reachability/components/ExcludeOptions";
 import { LocationSearch } from "@/pages/Reachability/components/LocationSearch";
 import { TimeIntervals } from "@/pages/Reachability/components/TimeIntervals";
 import { TravelModeTiles } from "@/pages/Reachability/components/TravelModeTiles";
+import { CLEAR_SEARCH_LABEL } from "@/pages/Reachability/constants/reachability-ui-copy";
+import { travelModeSupportsExclude } from "@/pages/Reachability/constants/travel-modes.constants";
 import { useIsochronePanelHandlers } from "@/pages/Reachability/hooks/use-isochrone-panel-handlers";
 import styles from "./index.module.css";
 
@@ -37,7 +37,7 @@ export function IsochronePanel() {
   const generalizeId = useId();
   const departAtEnabledId = useId();
   const departAtId = useId();
-  const excludeAvailable = supportsExcludeProfile(
+  const excludeAvailable = travelModeSupportsExclude(
     settingsState.settings.travelMode,
   );
   const hasSearchToClear =

@@ -5,15 +5,15 @@ import {
   INVALID_TRAVEL_MODE_MESSAGE,
   MISSING_START_LOCATION_MESSAGE,
   REACH_CALCULATION_FAILED_MESSAGE,
-} from "@/constants/reachability-ui-copy";
+} from "@/pages/Reachability/constants/reachability-ui-copy";
 import {
   TRAVEL_MODE_OPTIONS,
   type TravelMode,
-} from "@/constants/travel-modes.constants";
+} from "@/pages/Reachability/constants/travel-modes.constants";
+import { runReachabilityCalculation } from "@/pages/Reachability/utils/run-reachability-calculation";
 import type { ReachabilityOrigin } from "@/types/reachability.types";
 import type { IReachabilityClient } from "@/types/reachability-client.types";
 import type { ReachabilitySettings } from "./index.types";
-import { runReachabilityCalculation } from "./run-reachability-calculation";
 
 interface UseReachabilityCalculationOptions {
   origin: ReachabilityOrigin | null;

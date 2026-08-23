@@ -26,5 +26,5 @@ export function useReachabilitySettingsState() {
     setSettingsState(DEFAULT_SETTINGS);
   }, []);
 
-  return { resetSettings, setSettings, setSettingsState, settings };
+  return { resetSettings, setSettings, settings };
 }

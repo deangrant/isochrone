@@ -3,11 +3,11 @@ import {
   MAP_FIT_PADDING_BASE,
   REACHABILITY_PANEL_INSET_PX,
   REACHABILITY_SIDE_PANEL_MAX_WIDTH_PX,
-} from "@/constants/api.constants";
+} from "@/pages/Reachability/constants/reachability-layout.constants";
 import {
   desktopSidePanelFallbackPadding,
   panelRectToFitPadding,
-} from "@/utils/map-fit-padding";
+} from "@/pages/Reachability/utils/map-fit-padding";
 
 describe("desktopSidePanelFallbackPadding", () => {
   it("uses panel width and inset for desktop left padding", () => {

@@ -1,7 +1,7 @@
 import {
   EXCLUDE_OPTIONS,
   type ExcludeOptionValue,
-} from "@/constants/exclude-options.constants";
+} from "@/pages/Reachability/constants/exclude-options.constants";
 
 /**
  * Builds a comma-separated exclude string for the Mapbox Isochrone API.

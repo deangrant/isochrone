@@ -1,6 +1,6 @@
 import type { FeatureCollection } from "geojson";
 import { describe, expect, it } from "vitest";
-import { computeBounds } from "@/utils/geo-bounds";
+import { computeBounds } from "@/pages/Reachability/utils/geo-bounds";
 
 describe("computeBounds", () => {
   it("returns null for an empty feature collection", () => {

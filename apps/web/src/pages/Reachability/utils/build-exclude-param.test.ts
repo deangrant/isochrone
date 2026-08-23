@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildExcludeParam } from "@/utils/build-exclude-param";
+import { buildExcludeParam } from "@/pages/Reachability/utils/build-exclude-param";
 
 describe("buildExcludeParam", () => {
   it("returns undefined when nothing is selected", () => {

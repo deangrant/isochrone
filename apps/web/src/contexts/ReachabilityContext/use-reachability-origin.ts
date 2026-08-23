@@ -1,11 +1,11 @@
 import type { Dispatch, SetStateAction } from "react";
 import { useCallback, useState } from "react";
+import { parseCoordinates } from "@/pages/Reachability/utils/parse-coordinates";
 import type { GeocodingSuggestion } from "@/types/geocoding.types";
 import type {
   MapViewState,
   ReachabilityOrigin,
 } from "@/types/reachability.types";
-import { parseCoordinates } from "@/utils/parse-coordinates";
 import type { ReachabilitySettings } from "./index.types";
 
 interface UseReachabilityOriginOptions {

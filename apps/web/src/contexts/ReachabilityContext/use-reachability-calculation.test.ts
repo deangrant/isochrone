@@ -4,8 +4,8 @@ import { describe, expect, it, vi } from "vitest";
 import {
   INVALID_TRAVEL_MODE_MESSAGE,
   MISSING_START_LOCATION_MESSAGE,
-} from "@/constants/reachability-ui-copy";
-import type { TravelMode } from "@/constants/travel-modes.constants";
+} from "@/pages/Reachability/constants/reachability-ui-copy";
+import type { TravelMode } from "@/pages/Reachability/constants/travel-modes.constants";
 import type { ReachabilityOrigin } from "@/types/reachability.types";
 import type { IReachabilityClient } from "@/types/reachability-client.types";
 import type { ReachabilitySettings } from "./index.types";

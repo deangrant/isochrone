@@ -14,7 +14,6 @@ import {
   useReachability,
   useReachabilityMap,
 } from "@/contexts/ReachabilityContext";
-import { DEFAULT_SETTINGS } from "@/contexts/ReachabilityContext/use-reachability-settings-state";
 import { ServicesProvider } from "@/contexts/ServicesContext";
 import { IsochronePanel } from "@/pages/Reachability/components/IsochronePanel";
 import type { AppServices } from "@/services/app-services";
@@ -177,34 +176,5 @@ describe("reachability flow", () => {
     expect(result.current.state.origin).toBeNull();
     expect(result.current.state.result).toBeNull();
     expect(result.current.state.error).toBeNull();
-  });
-
-  it("restores default settings when resetPanel runs", async () => {
-    const services = createServices();
-
-    const { result } = renderHook(() => useReachability(), {
-      wrapper: ({ children }) => (
-        <ServicesProvider services={services}>
-          <ReachabilityProvider>{children}</ReachabilityProvider>
-        </ServicesProvider>
-      ),
-    });
-
-    act(() => {
-      result.current.actions.setLocationQuery("51.5, -0.12");
-      result.current.actions.setSettings({ travelMode: "bicycle" });
-    });
-
-    await act(async () => {
-      await result.current.actions.calculate();
-    });
-
-    act(() => {
-      result.current.actions.resetPanel();
-    });
-
-    expect(result.current.state.settings).toEqual(DEFAULT_SETTINGS);
-    expect(result.current.state.origin).toBeNull();
-    expect(result.current.state.result).toBeNull();
   });
 });

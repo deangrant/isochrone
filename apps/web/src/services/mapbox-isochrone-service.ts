@@ -1,9 +1,9 @@
 import type { FeatureCollection } from "geojson";
 import type {
+  ContourSpec,
   IReachabilityClient,
   ReachabilityRequest,
 } from "@/types/reachability-client.types";
-import type { ContourSpec } from "@/utils/build-contours";
 
 /**
  * Mapbox Isochrone API client.

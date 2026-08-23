@@ -1,7 +1,7 @@
 import { type ChangeEvent, useCallback } from "react";
-import type { ExcludeOptionValue } from "@/constants/exclude-options.constants";
-import type { TravelMode } from "@/constants/travel-modes.constants";
 import type { ReachabilityActions } from "@/contexts/ReachabilityContext/index.types";
+import type { ExcludeOptionValue } from "@/pages/Reachability/constants/exclude-options.constants";
+import type { TravelMode } from "@/pages/Reachability/constants/travel-modes.constants";
 import { formatDateTimeLocal } from "@/utils/datetime-local";
 
 type IsochronePanelHandlerActions = Pick<
