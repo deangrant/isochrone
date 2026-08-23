@@ -40,9 +40,7 @@ export function useReachabilityOrigin({
         return;
       }
 
-      if (query.trim().length === 0) {
-        setOrigin(null);
-      }
+      setOrigin(null);
     },
     [clearGeocodingSuggestions, setMapView, setSettings],
   );
