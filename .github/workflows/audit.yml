@@ -53,5 +53,5 @@ jobs:
       - name: Run React Doctor
         uses: millionco/react-doctor@01820bb4fd4d0a4aebcd8df2b2a143a098649cb2
         with:
-          version: "0.9.1"
+          version: "0.9.3"
           blocking: error
