@@ -23,3 +23,5 @@ Follow these skills for all work in `apps/web/src`:
 - Pure helpers belong in `utils/` or `pages/<Page>/utils/`, not loose files under `components/**`
 
 Run `pnpm validate:skills` before finishing TypeScript changes.
+
+See task routing in [`AGENTS.md`](../../AGENTS.md) for domain and workflow skills.

@@ -1,0 +1,15 @@
+---
+description: Reachability page and Mapbox invariants
+globs: apps/web/src/pages/Reachability/**
+alwaysApply: false
+---
+
+# Reachability and Mapbox
+
+- Page-only code stays under `pages/Reachability/{components,constants,utils,types,services,hooks}/`.
+- Import `mapbox-gl` dynamically inside map hooks; keep `MapView` behind `React.lazy`.
+- Calculation hooks must abort in-flight requests on unmount and rapid re-calculate.
+- Contour minutes must be strictly increasing and unique (`build-contours.ts`).
+- Map fit padding must account for the bottom-sheet layout via `use-map-fit-padding`.
+- Pass individual stable `useRef` handles into map sub-hooks; do not bundle refs in a new object each render.
+- Export/download logic belongs in `pages/Reachability/services/`, not top-level `services/`.

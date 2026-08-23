@@ -1,0 +1,11 @@
+---
+description: Biome lint/format policy — fix code, never suppress
+globs: "**/*.{ts,tsx,json}"
+alwaysApply: false
+---
+
+# Biome policy
+
+- Fix lint and format issues in source; do not add `biome.json` overrides or inline suppressions.
+- Run `pnpm exec biome ci .` (or `pnpm exec biome check --write <file>` for a single path).
+- Match existing style in touched files; let Biome auto-fix formatting when safe.

@@ -34,7 +34,8 @@
     "lint:fix": "biome lint --write .",
     "lint:lockfile": "pnpm install --frozen-lockfile",
     "test": "pnpm --filter web test",
-    "validate:skills": "node scripts/validate-skills.mjs"
+    "validate:skills": "node scripts/validate-skills.mjs",
+    "verify": "pnpm validate:skills && pnpm exec biome ci . && pnpm test && pnpm build"
   },
   "type": "module",
   "version": "1.0.0"

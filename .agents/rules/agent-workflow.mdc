@@ -1,0 +1,23 @@
+---
+description: Agent workflow, definition of done, and verification for isochrone
+alwaysApply: true
+---
+
+# Agent workflow
+
+**Glance → route → skill → change → verify.**
+
+1. Read root [`AGENTS.md`](../../AGENTS.md) and the matching skill under `.agents/skills/` before editing.
+2. Make the smallest change that solves the task; do not refactor unrelated code.
+3. For plan-driven work: mark todos `in_progress` then `completed`; do not edit plan files unless asked.
+4. Never add Biome suppressions or weaken `validate:skills` to pass checks.
+5. Do not commit unless the user explicitly asks.
+
+## Definition of done
+
+- Only intended files changed (`git diff` reviewed).
+- Applicable rules and skills followed for touched paths.
+- Verification run for the change scope (see `AGENTS.md`).
+- Do not claim a check passed unless it was actually run and passed.
+
+For merge-ready work, run `/isochrone-verify` or `pnpm verify` (plus `pnpm doctor:full` when React structure changed).

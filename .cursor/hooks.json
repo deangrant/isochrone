@@ -1,0 +1,20 @@
+{
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": "sh .agents/hooks/biome-after-file-edit.sh"
+      },
+      {
+        "command": "sh .agents/hooks/react-doctor-after-file-edit.sh"
+      }
+    ],
+    "sessionStart": [
+      {
+        "type": "prompt",
+        "prompt": "For TypeScript work in apps/web/src, read AGENTS.md task routing and the matching .agents/skills/ before editing. Run pnpm validate:skills before claiming done.",
+        "timeout": 5
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,12 @@
+---
+description: Vitest and Testing Library conventions for apps/web
+globs: "**/*.{test,spec}.{ts,tsx}"
+alwaysApply: false
+---
+
+# Vitest policy
+
+- Colocate `*.test.ts` / `*.test.tsx` next to the module under test.
+- Mock `fetch`, Mapbox, and service ports; no live Mapbox API calls in unit tests.
+- Prefer narrow runs: `pnpm --filter web exec vitest run <path>`.
+- Update tests when UI copy or behavior changes; assert behavior, not implementation details.

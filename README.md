@@ -1,95 +1,151 @@
 # Reachability Map
 
-A map-based web app for exploring travel reachability (isochrones). Search for a start location, choose a travel mode and time limits, and visualize how far you can travel on the map. Export results as GeoJSON polygons.
+A **reachability explorer** powered by [Mapbox](https://www.mapbox.com/) isochrones.
+
+Search for a start location, pick a travel mode and one or more time limits, and
+see how far you can travel on the map. Export contour polygons as GeoJSON or WKT
+for use in GIS tools or your own apps.
+
+The app runs entirely in the browser. It calls Mapbox for the map, forward
+geocoding, and isochrone calculation. There is no backend service in this
+repository.
+
+## Architecture at a glance
+
+```text
+Browser (Vite React SPA) ──► Mapbox GL JS (map tiles)
+         │
+         ├──► Mapbox Geocoding API (location search)
+         └──► Mapbox Isochrone API (travel-time contours)
+```
+
+| Package | Role |
+| --- | --- |
+| [`apps/web`](apps/web) | Vite React SPA — settings panel, lazy Mapbox map, geocoding, isochrone calculation, export |
+
+Deeper module maps, calculation flow, and bundle strategy:
+[`.agents/docs/ARCHITECTURE.md`](.agents/docs/ARCHITECTURE.md).
 
 ## Requirements
 
 - Node.js `>=22`
-- [pnpm](https://pnpm.io/) `11.8.0` (pinned via `packageManager` in `package.json`)
+- [pnpm](https://pnpm.io/) `11.8.0` (pinned via `packageManager` in root `package.json`)
 
 ```bash
 corepack enable
+pnpm install
 ```
 
-## Setup
+## Configuration
 
-1. Install dependencies:
+```bash
+cp apps/web/.env.example apps/web/.env
+```
 
-   ```bash
-   pnpm install
-   ```
+| Variable | Required | Notes |
+| --- | --- | --- |
+| `VITE_MAPBOX_GL_JS_PUBLIC` | Yes | Public Mapbox token (`pk.*`). Enable **Maps**, **Geocoding**, and **Isochrone API** scopes in your [Mapbox account](https://account.mapbox.com/). Restrict token URLs in the [Mapbox token UI](https://docs.mapbox.com/accounts/guides/tokens/#url-restrictions) — include `http://localhost:5173` for local development. |
 
-2. Configure environment:
+## Develop
 
-   ```bash
-   cp apps/web/.env.example apps/web/.env
-   ```
+```bash
+pnpm dev
+```
 
-   Set `VITE_MAPBOX_GL_JS_PUBLIC` to your Mapbox public token in `apps/web/.env`.
+| Process | URL |
+| --- | --- |
+| Vite app | [http://localhost:5173](http://localhost:5173) |
 
-   The token must have **Maps**, **Geocoding**, and **Isochrone API** scopes enabled in your [Mapbox account](https://account.mapbox.com/).
+If Vite picks a different port because `:5173` is busy, add that origin to your
+Mapbox token URL restrictions.
 
-3. Start the web app:
+## Build
 
-   ```bash
-   pnpm dev
-   ```
+```bash
+pnpm build
+```
 
-   Web: [http://localhost:5173](http://localhost:5173)
+Production output is written to `apps/web/dist/`.
+
+To inspect bundle composition after a build:
+
+```bash
+pnpm analyze:bundle
+```
+
+Opens `apps/web/dist/stats.html` — a treemap useful for PR and performance review.
+
+## Test and quality
+
+```bash
+pnpm verify        # validate:skills + Biome CI + test + build (local CI parity)
+pnpm test          # Vitest unit tests (apps/web)
+pnpm check         # Biome format + lint
+pnpm doctor:full   # React Doctor full scan on the web app
+```
+
+CI (see [`.github/workflows/`](.github/workflows/)):
+
+- `lint.yml` — skills validation, Biome CI, Vitest, production build, lockfile check
+- `audit.yml` — dependency audit and React Doctor
 
 ## Scripts
 
 | Script | Description |
 | --- | --- |
 | `pnpm dev` | Run the web app in development |
-| `pnpm build` | Production build |
-| `pnpm analyze:bundle` | Production build with bundle treemap at `apps/web/dist/stats.html` |
-| `pnpm test` | Run unit tests |
-| `pnpm check` | Biome lint and format check |
+| `pnpm build` | Production build (`apps/web`) |
+| `pnpm test` | Run Vitest unit tests |
+| `pnpm verify` | Full local CI: `validate:skills`, Biome CI, test, build |
+| `pnpm check` | Biome check (format + lint) |
+| `pnpm format` / `pnpm lint` | Format or lint only |
+| `pnpm validate:skills` | Enforce project structure and JSDoc rules |
+| `pnpm doctor` / `pnpm doctor:full` / `pnpm doctor:changed` | React Doctor |
+| `pnpm analyze:bundle` | Production build with bundle treemap |
 
-## Architecture
+## What you can configure
 
-- **`apps/web`** — React + Vite SPA with Mapbox GL map, geocoding, and isochrone calculation via the Mapbox Isochrone API
-
-## Bundle strategy
-
-Mapbox GL is a large vendor dependency (~1.8 MB / ~502 KB gzip) and is intentionally kept out of the initial JavaScript payload.
-
-**Lazy boundaries**
-
-- `MapView` — loaded via `React.lazy` when the reachability layout mounts; mapbox-gl is dynamically imported inside the map hook so the MapView chunk does not synchronously depend on mapbox at module evaluation time
-- `ExportContoursModal` — loaded on demand when the user opens export
-
-**Chunk isolation**
-
-- `vite.config.ts` places `mapbox-gl` in a dedicated `mapbox` vendor chunk via `manualChunks`
-- `chunkSizeWarningLimit: 1900` is set intentionally for that isolated vendor chunk only
-
-**Approximate production sizes** (run `pnpm build` to refresh)
-
-| Chunk | Gzip |
+| Setting | Behavior |
 | --- | --- |
-| `index` (app shell + panel) | ~70 KB |
-| `MapView` | ~2.3 KB |
-| `mapbox` (vendor) | ~502 KB |
-| `ExportContoursModal` | ~2.4 KB |
+| Location | Forward geocode search or paste coordinates |
+| Travel mode | Driving, Traffic, Walking, Cycling (Mapbox routing profiles) |
+| Time intervals | One or more contour minutes (unique, strictly increasing) |
+| Exclude (driving modes) | Optional road classes to avoid (tolls, motorways, ferries, cash-only tolls) |
+| Depart at | Optional departure time for traffic-aware profiles |
+| Contour smoothing | Denoise and generalize parameters passed to the Isochrone API |
+| Export | Download contours as **GeoJSON** or **WKT** |
 
-**Analysis**
+Open the in-app **User guide** (help control on the map) for plain-language
+explanations of each setting.
 
-```bash
-pnpm analyze:bundle
-```
+## Data sources and attribution
 
-Opens `apps/web/dist/stats.html` — a treemap of chunk composition for PR/review discussion.
+- Location search: [Mapbox Geocoding API](https://docs.mapbox.com/api/search/geocoding/)
+- Travel-time contours: [Mapbox Isochrone API](https://docs.mapbox.com/api/navigation/isochrone/)
+- Map display: [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/) (`mapbox://styles/mapbox/light-v11`)
 
-**Critical-path trims**
+Map data © [Mapbox](https://www.mapbox.com/) © [OpenStreetMap](https://www.openstreetmap.org/copyright).
 
-- Mapbox CSS and attribution overrides load with `MapView`, not the entry bundle
-- Sora fonts use latin subsets only (`@fontsource/sora/latin-400.css`, `latin-600.css`)
+## Known limitations
 
-## Travel modes
+- **Client-side only.** The Mapbox public token is bundled into the web app at
+  build time. Use URL restrictions and scoped tokens; do not commit secrets.
+- **Mapbox quotas and billing.** Geocoding and isochrone requests count against
+  your Mapbox account limits.
+- **No offline mode.** The app requires network access to Mapbox services.
+- **Large map vendor chunk.** Mapbox GL is lazy-loaded to keep the initial
+  payload small, but the vendor chunk is still ~500 KB gzip. See
+  [ARCHITECTURE.md](.agents/docs/ARCHITECTURE.md) for bundle boundaries.
 
-Driving, walking, and cycling.
+## Agents and docs
+
+| Doc | Purpose |
+| --- | --- |
+| [`AGENTS.md`](AGENTS.md) | Agent orientation, skills, commands, definition of done |
+| [`.agents/docs/ARCHITECTURE.md`](.agents/docs/ARCHITECTURE.md) | System architecture and module maps |
+| [`.agents/docs/DESIGN.md`](.agents/docs/DESIGN.md) | Design tokens and UI conventions |
+| [DeepWiki](https://deepwiki.com/deangrant/isochrone) | Indexed project wiki |
+| [`.agents/skills/`](.agents/skills/) | Task-specific implementation skills |
 
 ## License
 
