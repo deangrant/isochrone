@@ -13,7 +13,7 @@ const DEFAULT_SETTINGS: ReachabilitySettings = {
 };
 
 /** Manages isochrone panel settings state. */
-export function useReachabilitySettings() {
+export function useReachabilitySettingsState() {
   const [settings, setSettingsState] =
     useState<ReachabilitySettings>(DEFAULT_SETTINGS);
 

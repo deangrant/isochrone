@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { IGeocodingService } from "@/services/mapbox-geocoding-service";
 import type { GeocodingSuggestion } from "@/types/geocoding.types";
+import type { IGeocodingService } from "@/types/geocoding-service.types";
 import { parseCoordinates } from "@/utils/parse-coordinates";
 
 /**

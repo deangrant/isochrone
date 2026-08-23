@@ -3,14 +3,14 @@ import { useCallback, useState } from "react";
 import { Button } from "@/components/core/Button";
 import { Modal } from "@/components/core/Modal";
 import {
-  allContourIndices,
-  buildContourExportOptions,
-} from "./contour-export-options";
-import { CONTOUR_EXPORTERS } from "./contour-exporters";
-import {
   DEFAULT_EXPORT_FORMAT,
   EXPORT_FORMAT_OPTIONS,
-} from "./export-format-options";
+} from "@/constants/contour-export.constants";
+import { CONTOUR_EXPORTERS } from "@/pages/Reachability/utils/contour-exporters";
+import {
+  allContourIndices,
+  buildContourExportOptions,
+} from "@/utils/contour-export-options";
 import styles from "./index.module.css";
 import type {
   ContourExportFormat,
@@ -26,14 +26,10 @@ function parseContourIndex(value: string | undefined): number | null {
   return index;
 }
 
-function parseExportFormat(
+function isContourExportFormat(
   value: string | undefined,
-): ContourExportFormat | null {
-  if (value === "geojson" || value === "wkt") {
-    return value;
-  }
-
-  return null;
+): value is ContourExportFormat {
+  return EXPORT_FORMAT_OPTIONS.some((option) => option.format === value);
 }
 
 /** Renders contour scope options and triggers contour download. */
@@ -71,8 +67,8 @@ export function ExportContoursModal({
   }, []);
 
   const selectFormat = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-    const format = parseExportFormat(event.currentTarget.dataset.exportFormat);
-    if (format === null) {
+    const format = event.currentTarget.dataset.exportFormat;
+    if (!isContourExportFormat(format)) {
       return;
     }
 

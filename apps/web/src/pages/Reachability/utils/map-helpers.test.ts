@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { normalizeContourCollection } from "@/pages/Reachability/components/MapView/map-helpers";
+import { normalizeContourCollection } from "@/pages/Reachability/utils/map-helpers";
 
 describe("normalizeContourCollection", () => {
   it("keeps fill values that already include a hash", () => {

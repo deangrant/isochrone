@@ -1,7 +1,7 @@
 import styles from "./index.module.css";
 import type { FormFieldProps } from "./index.types";
 
-/** Label + control wrapper used in the reachability panel. */
+/** Renders a label and control wrapper used in the reachability panel. */
 export function FormField({ label, htmlFor, children, hint }: FormFieldProps) {
   return (
     <div className={styles.root}>

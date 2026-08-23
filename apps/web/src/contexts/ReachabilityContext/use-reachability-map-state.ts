@@ -3,7 +3,7 @@ import { DEFAULT_MAP_VIEW } from "@/constants/api.constants";
 import type { MapViewState } from "@/types/reachability.types";
 
 /** Manages map camera state and bounds-to-fit requests. */
-export function useReachabilityMap() {
+export function useReachabilityMapState() {
   const [mapView, setMapView] = useState<MapViewState>(DEFAULT_MAP_VIEW);
   const [boundsToFit, setBoundsToFit] = useState<
     [[number, number], [number, number]] | null

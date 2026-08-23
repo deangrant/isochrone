@@ -1,7 +1,7 @@
 import {
   CONTOUR_COLORS,
   MAX_CONTOUR_COUNT,
-} from "@/constants/travel-modes.constants";
+} from "@/constants/contours.constants";
 
 /** Maximum allowed time interval in minutes. */
 export const MAX_TIME_INTERVAL_MINUTES = 60;
@@ -17,6 +17,7 @@ export interface ContourSpec {
 /**
  * Builds contour specs from explicit time intervals in minutes.
  * @param timeIntervals One to three minute values.
+ * @throws When intervals are missing, exceed limits, duplicate, or fall outside 1–60 minutes.
  */
 export function buildContours(timeIntervals: number[]): ContourSpec[] {
   if (!Array.isArray(timeIntervals) || timeIntervals.length === 0) {
@@ -27,6 +28,10 @@ export function buildContours(timeIntervals: number[]): ContourSpec[] {
   }
 
   const sorted = [...timeIntervals].sort((left, right) => left - right);
+
+  if (sorted.some((time, index) => index > 0 && time === sorted[index - 1])) {
+    throw new Error("Time intervals must be unique.");
+  }
 
   return sorted.map((time, index) => {
     if (

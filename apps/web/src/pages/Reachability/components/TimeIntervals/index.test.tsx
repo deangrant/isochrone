@@ -1,7 +1,22 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import {
+  getNextUniqueInterval,
+  getRowActions,
+} from "@/pages/Reachability/utils/time-interval-row-actions";
 import { TimeIntervals } from "./index";
-import { getRowActions } from "./row-actions";
+
+describe("getNextUniqueInterval", () => {
+  it("returns the next unused minute after the last interval", () => {
+    expect(getNextUniqueInterval([10])).toBe(15);
+  });
+
+  it("skips values already in use", () => {
+    expect(getNextUniqueInterval([10, 15])).toBe(20);
+    expect(getNextUniqueInterval([60])).toBe(1);
+    expect(getNextUniqueInterval([58, 59])).toBe(60);
+  });
+});
 
 describe("getRowActions", () => {
   it("shows add only on the last row when one interval exists", () => {
@@ -31,5 +46,33 @@ describe("TimeIntervals", () => {
     fireEvent.click(screen.getByLabelText("Remove interval 2"));
 
     expect(onChange).toHaveBeenCalledWith([5]);
+  });
+
+  it("does not emit duplicate interval values", () => {
+    const onChange = vi.fn();
+
+    render(<TimeIntervals intervals={[5, 10]} onChange={onChange} />);
+
+    fireEvent.change(screen.getAllByRole("spinbutton")[0], {
+      target: { value: "10" },
+    });
+
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("adds the next unique interval when the default increment would duplicate", () => {
+    const onChange = vi.fn();
+
+    const { container } = render(
+      <TimeIntervals intervals={[60]} onChange={onChange} />,
+    );
+
+    fireEvent.click(
+      container.querySelector(
+        'button[aria-label="Add interval"]',
+      ) as HTMLButtonElement,
+    );
+
+    expect(onChange).toHaveBeenCalledWith([60, 1]);
   });
 });

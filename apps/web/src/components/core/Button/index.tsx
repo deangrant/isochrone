@@ -1,7 +1,7 @@
 import styles from "./index.module.css";
 import type { ButtonProps } from "./index.types";
 
-/** Primary action control used across the reachability chrome. */
+/** Renders the primary action control used across the reachability chrome. */
 export function Button({
   children,
   variant = "primary",

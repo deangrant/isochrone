@@ -1,12 +1,12 @@
 import type { FeatureCollection } from "geojson";
 import type { Dispatch, SetStateAction } from "react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   TRAVEL_MODE_OPTIONS,
   type TravelMode,
 } from "@/constants/travel-modes.constants";
-import type { IReachabilityClient } from "@/services/mapbox-isochrone-service";
 import type { ReachabilityOrigin } from "@/types/reachability.types";
+import type { IReachabilityClient } from "@/types/reachability-client.types";
 import type { ReachabilitySettings } from "./index.types";
 import { runReachabilityCalculation } from "./run-reachability-calculation";
 
@@ -34,6 +34,13 @@ export function useReachabilityCalculation({
   const [error, setError] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
+  useEffect(
+    () => () => {
+      abortRef.current?.abort();
+    },
+    [],
+  );
+
   const calculate = useCallback(async () => {
     if (!origin) {
       setError("Set a start location before calculating.");
@@ -55,30 +62,40 @@ export function useReachabilityCalculation({
     setCalculating(true);
     setError(null);
 
-    const outcome = await runReachabilityCalculation(
-      reachability,
-      origin,
-      settings,
-      travelOption.profile,
-      controller.signal,
-    );
+    try {
+      const outcome = await runReachabilityCalculation(
+        reachability,
+        origin,
+        settings,
+        travelOption.profile,
+        controller.signal,
+      );
 
-    if (controller.signal.aborted) {
-      return;
-    }
+      if (controller.signal.aborted) {
+        return;
+      }
 
-    if (!outcome.ok) {
-      setError(outcome.error);
-      setCalculating(false);
-      return;
-    }
+      if (!outcome.ok) {
+        setError(outcome.error);
+        return;
+      }
 
-    setResult(outcome.result);
-    setResultTravelMode(settings.travelMode);
-    if (outcome.bounds) {
-      setBoundsToFit(outcome.bounds);
+      setResult(outcome.result);
+      setResultTravelMode(settings.travelMode);
+      if (outcome.bounds) {
+        setBoundsToFit(outcome.bounds);
+      }
+    } catch {
+      if (controller.signal.aborted) {
+        return;
+      }
+
+      setError("Calculation failed.");
+    } finally {
+      if (!controller.signal.aborted) {
+        setCalculating(false);
+      }
     }
-    setCalculating(false);
   }, [origin, reachability, setBoundsToFit, settings]);
 
   return {

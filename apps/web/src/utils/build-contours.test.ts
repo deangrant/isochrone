@@ -36,4 +36,13 @@ describe("buildContours", () => {
       "Each time interval must be between 1 and 60 minutes.",
     );
   });
+
+  it("throws when intervals are duplicated", () => {
+    expect(() => buildContours([10, 10])).toThrow(
+      "Time intervals must be unique.",
+    );
+    expect(() => buildContours([5, 10, 10])).toThrow(
+      "Time intervals must be unique.",
+    );
+  });
 });

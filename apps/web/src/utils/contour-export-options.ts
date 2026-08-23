@@ -1,5 +1,5 @@
 import type { Feature, FeatureCollection } from "geojson";
-import type { ContourExportOption } from "./index.types";
+import type { ContourExportOption } from "@/pages/Reachability/components/ExportContoursModal/index.types";
 
 function contourMinutesForSort(feature: Feature): number {
   const contourMinutes = feature.properties?.contour;

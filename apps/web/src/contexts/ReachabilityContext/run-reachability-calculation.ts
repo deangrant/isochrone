@@ -1,9 +1,10 @@
-import type { FeatureCollection, Geometry } from "geojson";
+import type { FeatureCollection } from "geojson";
 import { supportsExcludeProfile } from "@/constants/exclude-options.constants";
-import type { IReachabilityClient } from "@/services/mapbox-isochrone-service";
 import type { ReachabilityOrigin } from "@/types/reachability.types";
+import type { IReachabilityClient } from "@/types/reachability-client.types";
 import { buildContours, type ContourSpec } from "@/utils/build-contours";
 import { buildExcludeParam } from "@/utils/build-exclude-param";
+import { computeBounds } from "@/utils/geo-bounds";
 import type { ReachabilitySettings } from "./index.types";
 
 /** Result of a reachability calculation attempt. */
@@ -20,6 +21,12 @@ export type ReachabilityCalculationResult =
 
 /**
  * Runs a reachability calculation with the given settings.
+ * @param reachability Reachability client port.
+ * @param origin Start location for the isochrone request.
+ * @param settings Panel settings used to build the request.
+ * @param profile Mapbox routing profile identifier.
+ * @param signal Optional abort signal for in-flight requests.
+ * @returns A discriminated union with either the result or an error message.
  */
 export async function runReachabilityCalculation(
   reachability: IReachabilityClient,
@@ -63,59 +70,14 @@ export async function runReachabilityCalculation(
       result,
     };
   } catch (calcError) {
+    if (signal?.aborted) {
+      throw calcError;
+    }
+
     return {
       error:
         calcError instanceof Error ? calcError.message : "Calculation failed.",
       ok: false,
     };
-  }
-}
-
-/**
- * Computes a bounding box for a feature collection.
- */
-export function computeBounds(
-  collection: FeatureCollection,
-): [[number, number], [number, number]] | null {
-  let west = Number.POSITIVE_INFINITY;
-  let south = Number.POSITIVE_INFINITY;
-  let east = Number.NEGATIVE_INFINITY;
-  let north = Number.NEGATIVE_INFINITY;
-
-  for (const feature of collection.features) {
-    const coords = extractCoordinates(feature.geometry);
-    for (const [lon, lat] of coords) {
-      west = Math.min(west, lon);
-      south = Math.min(south, lat);
-      east = Math.max(east, lon);
-      north = Math.max(north, lat);
-    }
-  }
-
-  if (!Number.isFinite(west)) {
-    return null;
-  }
-  return [
-    [west, south],
-    [east, north],
-  ];
-}
-
-function extractCoordinates(geometry: Geometry): [number, number][] {
-  switch (geometry.type) {
-    case "Point":
-      return [geometry.coordinates as [number, number]];
-    case "MultiPoint":
-    case "LineString":
-      return geometry.coordinates as [number, number][];
-    case "MultiLineString":
-    case "Polygon":
-      return geometry.coordinates.flat() as [number, number][];
-    case "MultiPolygon":
-      return geometry.coordinates.flat(2) as [number, number][];
-    case "GeometryCollection":
-      return geometry.geometries.flatMap(extractCoordinates);
-    default:
-      return [];
   }
 }

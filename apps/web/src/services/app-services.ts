@@ -1,8 +1,8 @@
-import { getMapboxAccessToken } from "@/config/mapbox.config";
-import type { IGeocodingService } from "@/services/mapbox-geocoding-service";
+import { getMapboxAccessToken } from "@/constants/mapbox.constants";
 import { MapboxGeocodingService } from "@/services/mapbox-geocoding-service";
-import type { IReachabilityClient } from "@/services/mapbox-isochrone-service";
 import { MapboxIsochroneService } from "@/services/mapbox-isochrone-service";
+import type { IGeocodingService } from "@/types/geocoding-service.types";
+import type { IReachabilityClient } from "@/types/reachability-client.types";
 
 /** Wired application services. */
 export interface AppServices {

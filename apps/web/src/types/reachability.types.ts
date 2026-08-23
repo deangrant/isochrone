@@ -6,7 +6,10 @@ export interface ReachabilityOrigin {
 
 /** Map camera state. */
 export interface MapViewState {
+  /** Map center latitude in degrees. */
   lat: number;
+  /** Map center longitude in degrees. */
   lon: number;
+  /** Map zoom level. */
   zoom: number;
 }

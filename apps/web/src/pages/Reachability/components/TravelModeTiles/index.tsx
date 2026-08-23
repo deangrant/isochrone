@@ -1,13 +1,13 @@
 import { type ChangeEvent, useCallback } from "react";
-import { TravelModeIcon } from "@/components/core/TravelModeIcon";
 import {
   TRAVEL_MODE_OPTIONS,
   type TravelMode,
 } from "@/constants/travel-modes.constants";
+import { TravelModeIcon } from "@/pages/Reachability/components/TravelModeIcon";
 import styles from "./index.module.css";
 import type { TravelModeTilesProps } from "./index.types";
 
-/** Icon tile picker for driving, traffic, walking, and cycling. */
+/** Renders an icon tile picker for driving, traffic, walking, and cycling. */
 export function TravelModeTiles({
   value,
   onChange,

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   DEFAULT_EXPORT_FORMAT,
   EXPORT_FORMAT_OPTIONS,
-} from "./export-format-options";
+} from "./contour-export.constants";
 
 describe("export-format-options", () => {
   it("lists GeoJSON and WKT formats", () => {

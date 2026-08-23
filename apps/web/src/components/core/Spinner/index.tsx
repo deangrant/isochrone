@@ -1,7 +1,7 @@
 import styles from "./index.module.css";
 import type { SpinnerProps } from "./index.types";
 
-/** Compact loading indicator for calculation states. */
+/** Renders a compact loading indicator for calculation states. */
 export function Spinner({ label = "Loading", size = "sm" }: SpinnerProps) {
   const className = [styles.root, size === "lg" ? styles.lg : undefined]
     .filter(Boolean)

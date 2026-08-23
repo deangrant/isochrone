@@ -1,5 +1,5 @@
 import { createContext, type ReactNode, useContext } from "react";
-import type { AppServices } from "@/services/create-services";
+import type { AppServices } from "@/services/app-services";
 
 const ServicesContext = createContext<AppServices | null>(null);
 
@@ -23,6 +23,7 @@ export function ServicesProvider({
 
 /**
  * Returns wired application services from context.
+ * @throws When called outside ServicesProvider.
  */
 export function useServices(): AppServices {
   const services = useContext(ServicesContext);

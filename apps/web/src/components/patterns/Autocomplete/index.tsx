@@ -7,7 +7,7 @@ import { Input } from "@/components/core/Input";
 import styles from "./index.module.css";
 import type { AutocompleteProps, SuggestionItemProps } from "./index.types";
 
-/** Text input with a lightweight suggestion dropdown. */
+/** Renders a text input with a lightweight suggestion dropdown. */
 export function Autocomplete({
   id,
   value,

@@ -4,14 +4,19 @@ import type { TravelMode } from "@/constants/travel-modes.constants";
 import type { ReachabilityActions } from "@/contexts/ReachabilityContext/index.types";
 import { formatDateTimeLocal } from "@/utils/datetime-local";
 
+type IsochronePanelHandlerActions = Pick<
+  ReachabilityActions,
+  "calculate" | "setSettings"
+>;
+
 /**
  * Returns stable panel change handlers for isochrone settings.
- * @param actions Reachability context actions.
+ * @param actions Reachability actions used by the panel.
  * @param departAt Current depart-at value used when enabling the toggle.
  * @param exclude Current enabled exclude values.
  */
 export function useIsochronePanelHandlers(
-  actions: ReachabilityActions,
+  actions: IsochronePanelHandlerActions,
   departAt: string,
   exclude: readonly ExcludeOptionValue[],
 ) {

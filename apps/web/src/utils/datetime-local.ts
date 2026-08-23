@@ -24,10 +24,7 @@ const MONTH_HEADING_FORMATTER = new Intl.DateTimeFormat("en-GB", {
   year: "numeric",
 });
 
-/**
- * Formats a date for Mapbox depart_at and internal storage.
- * @param date Date to format in local time.
- */
+/** Formats a date for Mapbox depart_at and internal storage. */
 export function formatDateTimeLocal(date: Date): string {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -38,17 +35,14 @@ export function formatDateTimeLocal(date: Date): string {
   return `${year}-${month}-${day}T${hours}:${minutes}`;
 }
 
-/**
- * Formats a date for display in the depart-at trigger.
- * @param date Date to format in local time.
- */
+/** Formats a date for display in the depart-at trigger. */
 export function formatDateTimeDisplay(date: Date): string {
   return DATE_TIME_DISPLAY_FORMATTER.format(date);
 }
 
 /**
  * Parses a datetime-local value into a Date.
- * @param value Stored datetime-local value.
+ * @returns Parsed date, or null when the value is invalid.
  */
 export function parseDateTimeLocal(value: string): Date | null {
   const match = DATE_TIME_LOCAL_PATTERN.exec(value);
@@ -76,11 +70,7 @@ export function parseDateTimeLocal(value: string): Date | null {
   return date;
 }
 
-/**
- * Returns day numbers for a month grid with leading empty cells.
- * @param year Calendar year.
- * @param month Calendar month (0–11).
- */
+/** Returns day numbers for a month grid with leading empty cells. */
 export function getMonthCalendarDays(
   year: number,
   month: number,
@@ -104,11 +94,7 @@ export function getMonthCalendarDays(
   return cells;
 }
 
-/**
- * Formats a month heading for the calendar popover.
- * @param year Calendar year.
- * @param month Calendar month (0–11).
- */
+/** Formats a month heading for the calendar popover. */
 export function formatMonthHeading(year: number, month: number): string {
   return MONTH_HEADING_FORMATTER.format(new Date(year, month, 1));
 }

@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { Autocomplete } from "@/components/patterns/Autocomplete";
 import type { LocationSearchProps } from "./index.types";
 
-/** Place search combobox backed by geocoding suggestions. */
+/** Renders a place search combobox backed by geocoding suggestions. */
 export function LocationSearch({
   id,
   query,

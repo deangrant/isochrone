@@ -1,17 +1,17 @@
 import { type ReactNode, useCallback, useContext, useMemo } from "react";
 import { useServices } from "@/contexts/ServicesContext";
+import { computeBounds } from "@/utils/geo-bounds";
 import type {
   ReachabilityActions,
   ReachabilityContextValue,
   ReachabilityState,
 } from "./index.types";
 import { ReachabilityContext } from "./reachability-context";
-import { computeBounds } from "./run-reachability-calculation";
 import { useGeocodingSuggestions } from "./use-geocoding-suggestions";
 import { useReachabilityCalculation } from "./use-reachability-calculation";
-import { useReachabilityMap } from "./use-reachability-map";
+import { useReachabilityMapState } from "./use-reachability-map-state";
 import { useReachabilityOrigin } from "./use-reachability-origin";
-import { useReachabilitySettings } from "./use-reachability-settings";
+import { useReachabilitySettingsState } from "./use-reachability-settings-state";
 
 /** Props for the reachability provider. */
 export interface ReachabilityProviderProps {
@@ -21,9 +21,9 @@ export interface ReachabilityProviderProps {
 /** Provides reachability state and actions to the page tree. */
 export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
   const { geocoding, reachability } = useServices();
-  const { settings, setSettings } = useReachabilitySettings();
+  const { settings, setSettings } = useReachabilitySettingsState();
   const { boundsToFit, clearBoundsToFit, mapView, setBoundsToFit, setMapView } =
-    useReachabilityMap();
+    useReachabilityMapState();
   const { clearGeocodingSuggestions, geocodingSuggestions } =
     useGeocodingSuggestions(geocoding, settings.locationQuery);
   const { origin, selectGeocodingSuggestion, setLocationQuery } =
@@ -108,7 +108,8 @@ export function ReachabilityProvider({ children }: ReachabilityProviderProps) {
 }
 
 /**
- * Returns reachability state and actions from context.
+ * Returns the full reachability state and actions from context.
+ * @throws When called outside `ReachabilityProvider`.
  */
 export function useReachability(): ReachabilityContextValue {
   const value = useContext(ReachabilityContext);
@@ -118,4 +119,54 @@ export function useReachability(): ReachabilityContextValue {
     );
   }
   return value;
+}
+
+/** Returns map camera state and map-related actions. */
+export function useReachabilityMap() {
+  const { state, actions } = useReachability();
+  return {
+    actions: {
+      clearBoundsToFit: actions.clearBoundsToFit,
+      fitContoursBounds: actions.fitContoursBounds,
+      setMapView: actions.setMapView,
+    },
+    state: {
+      boundsToFit: state.boundsToFit,
+      mapView: state.mapView,
+      origin: state.origin,
+      result: state.result,
+      resultTravelMode: state.resultTravelMode,
+    },
+  };
+}
+
+/** Returns isochrone panel settings and location search state. */
+export function useReachabilitySettings() {
+  const { state, actions } = useReachability();
+  return {
+    actions: {
+      selectGeocodingSuggestion: actions.selectGeocodingSuggestion,
+      setLocationQuery: actions.setLocationQuery,
+      setSettings: actions.setSettings,
+    },
+    state: {
+      geocodingSuggestions: state.geocodingSuggestions,
+      settings: state.settings,
+    },
+  };
+}
+
+/** Returns calculation status and the calculate action. */
+export function useReachabilityCalculationState() {
+  const { state, actions } = useReachability();
+  return {
+    actions: {
+      calculate: actions.calculate,
+    },
+    state: {
+      calculating: state.calculating,
+      error: state.error,
+      origin: state.origin,
+    },
+  };
 }

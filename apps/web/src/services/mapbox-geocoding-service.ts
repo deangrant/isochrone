@@ -1,15 +1,5 @@
 import type { GeocodingSuggestion } from "@/types/geocoding.types";
-
-/**
- * Port for forward geocoding place search.
- */
-export interface IGeocodingService {
-  /** Searches for place suggestions matching a query. */
-  search: (
-    query: string,
-    signal?: AbortSignal,
-  ) => Promise<GeocodingSuggestion[]>;
-}
+import type { IGeocodingService } from "@/types/geocoding-service.types";
 
 /**
  * Mapbox Geocoding API v6 forward search client.

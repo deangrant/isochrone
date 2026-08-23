@@ -1,4 +1,5 @@
-import type { Feature, FeatureCollection } from "geojson";
+import type { FeatureCollection } from "geojson";
+import { filterContours } from "@/utils/filter-contours";
 
 /** Options for GeoJSON export. */
 export interface GeoJsonDownloadOptions {
@@ -6,32 +7,6 @@ export interface GeoJsonDownloadOptions {
   contourIndices?: readonly number[];
   /** Feature collection to download. */
   data: FeatureCollection;
-}
-
-/**
- * Filters a feature collection to the requested contour indices.
- * @param data Source feature collection.
- * @param indices Contour indices to keep, in export order.
- */
-export function filterContours(
-  data: FeatureCollection,
-  indices: readonly number[],
-): FeatureCollection {
-  const features: Feature[] = [];
-
-  for (const index of indices) {
-    const feature = data.features[index];
-    if (!feature) {
-      throw new Error("Selected contour index is out of range.");
-    }
-
-    features.push(feature);
-  }
-
-  return {
-    features,
-    type: "FeatureCollection",
-  };
 }
 
 /**

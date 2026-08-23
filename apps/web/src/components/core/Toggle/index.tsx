@@ -1,7 +1,7 @@
 import styles from "./index.module.css";
 import type { ToggleProps } from "./index.types";
 
-/** Accessible on/off switch used in panel settings. */
+/** Renders an accessible on/off switch used in panel settings. */
 export function Toggle({
   id,
   checked,

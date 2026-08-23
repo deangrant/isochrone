@@ -2,7 +2,7 @@ import { type ChangeEvent, useCallback } from "react";
 import styles from "./index.module.css";
 import type { InputProps } from "./index.types";
 
-/** Text input used in reachability panel fields. */
+/** Renders a text input used in reachability panel fields. */
 export function Input({
   id,
   value,

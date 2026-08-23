@@ -1,6 +1,8 @@
 /** Parsed geographic coordinates. */
 export interface ParsedCoordinates {
+  /** Latitude in degrees (-90 to 90). */
   lat: number;
+  /** Longitude in degrees (-180 to 180). */
   lon: number;
 }
 
@@ -8,7 +10,7 @@ const COORDINATE_SPLIT_PATTERN = /[,\s]+/;
 
 /**
  * Parses a latitude/longitude string such as `51.5, -0.12` or `51.5 -0.12`.
- * @param input Raw coordinate string.
+ * @returns Parsed coordinates, or null when input is empty, malformed, or out of range.
  */
 export function parseCoordinates(input: string): ParsedCoordinates | null {
   const trimmed = input.trim();

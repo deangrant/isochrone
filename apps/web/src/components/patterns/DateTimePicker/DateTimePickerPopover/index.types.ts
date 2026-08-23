@@ -1,7 +1,10 @@
 import type { MouseEvent, RefObject } from "react";
 
+/** One cell in the calendar month grid. */
 export interface CalendarCell {
+  /** Day of month, or null for leading or trailing padding cells. */
   day: number | null;
+  /** Stable React key for the cell. */
   key: string;
 }
 

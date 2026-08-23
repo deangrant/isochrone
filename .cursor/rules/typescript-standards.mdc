@@ -1,0 +1,22 @@
+---
+description: Enforce TypeScript JSDoc, SOLID, and project structure skills for apps/web
+alwaysApply: true
+---
+
+# TypeScript standards
+
+Follow these skills for all work in `apps/web/src`:
+
+- `.agents/skills/typescript-jsdoc-style/SKILL.md`
+- `.agents/skills/typescript-solid-design/SKILL.md`
+- `.agents/skills/typescript-project-structure/SKILL.md`
+
+## Non-negotiables
+
+- No component-layer barrel files under `components/`
+- Folder-per-component layout with direct imports
+- Exported APIs use well-formed JSDoc with verb-phrase summaries for components
+- Depend on service ports from `types/`, wire concretes only in `services/app-services.ts`
+- Pure helpers belong in `utils/` or `pages/<Page>/utils/`, not loose files under `components/**`
+
+Run `pnpm validate:skills` before finishing TypeScript changes.

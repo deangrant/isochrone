@@ -4,7 +4,7 @@ import { EXCLUDE_OPTIONS } from "@/constants/exclude-options.constants";
 import styles from "./index.module.css";
 import type { ExcludeOptionsProps } from "./index.types";
 
-/** Toggle list for Mapbox driving-profile exclude values. */
+/** Renders a toggle list for Mapbox driving-profile exclude values. */
 export function ExcludeOptions({
   selected,
   onToggle,

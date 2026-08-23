@@ -1,5 +1,5 @@
 import type { FeatureCollection } from "geojson";
-import { filterContours } from "@/services/geojson-download-service";
+import { filterContours } from "@/utils/filter-contours";
 import { featureCollectionToWkt } from "@/utils/geojson-to-wkt";
 
 /** Options for WKT export. */

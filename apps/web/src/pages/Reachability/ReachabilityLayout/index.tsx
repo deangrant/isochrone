@@ -1,8 +1,12 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useRef } from "react";
 import { Spinner } from "@/components/core/Spinner";
-import { getMapboxAccessToken } from "@/config/mapbox.config";
-import { useReachability } from "@/contexts/ReachabilityContext";
+import { getMapboxAccessToken } from "@/constants/mapbox.constants";
+import {
+  useReachabilityCalculationState,
+  useReachabilityMap,
+} from "@/contexts/ReachabilityContext";
 import { IsochronePanel } from "@/pages/Reachability/components/IsochronePanel";
+import { useMapFitPadding } from "@/pages/Reachability/hooks/use-map-fit-padding";
 import styles from "./index.module.css";
 
 const MapView = lazy(async () => {
@@ -10,12 +14,15 @@ const MapView = lazy(async () => {
   return { default: module.MapView };
 });
 
-/** Full-page layout with left isochrone panel and map. */
+/** Renders the full-page reachability layout with panel and map. */
 export function ReachabilityLayout() {
-  const { state, actions } = useReachability();
+  const { state: mapState, actions: mapActions } = useReachabilityMap();
+  const { state: calculationState } = useReachabilityCalculationState();
+  const panelRef = useRef<HTMLElement>(null);
+  const fitPadding = useMapFitPadding(panelRef);
 
   return (
-    <div aria-busy={state.calculating} className={styles.root}>
+    <div aria-busy={calculationState.calculating} className={styles.root}>
       <section aria-label="Map" className={styles.mapPane}>
         <Suspense
           fallback={
@@ -25,20 +32,25 @@ export function ReachabilityLayout() {
           }
         >
           <MapView
-            boundsToFit={state.boundsToFit}
-            contours={state.result}
+            boundsToFit={mapState.boundsToFit}
+            contours={mapState.result}
+            fitPadding={fitPadding}
             mapboxAccessToken={getMapboxAccessToken()}
-            mapView={state.mapView}
-            onBoundsFitted={actions.clearBoundsToFit}
-            onFitContours={actions.fitContoursBounds}
-            onViewChange={actions.setMapView}
-            origin={state.origin}
-            resultTravelMode={state.resultTravelMode}
+            mapView={mapState.mapView}
+            onBoundsFitted={mapActions.clearBoundsToFit}
+            onFitContours={mapActions.fitContoursBounds}
+            onViewChange={mapActions.setMapView}
+            origin={mapState.origin}
+            resultTravelMode={mapState.resultTravelMode}
           />
         </Suspense>
       </section>
 
-      <aside aria-label="Isochrone settings" className={styles.sidePanel}>
+      <aside
+        aria-label="Isochrone settings"
+        className={styles.sidePanel}
+        ref={panelRef}
+      >
         <IsochronePanel />
       </aside>
     </div>

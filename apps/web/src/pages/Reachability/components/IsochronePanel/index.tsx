@@ -5,29 +5,40 @@ import { Spinner } from "@/components/core/Spinner";
 import { Toggle } from "@/components/core/Toggle";
 import { DateTimePicker } from "@/components/patterns/DateTimePicker";
 import { FormField } from "@/components/patterns/FormField";
-import { LocationSearch } from "@/components/patterns/LocationSearch";
 import { supportsExcludeProfile } from "@/constants/exclude-options.constants";
-import { useReachability } from "@/contexts/ReachabilityContext";
+import {
+  useReachabilityCalculationState,
+  useReachabilitySettings,
+} from "@/contexts/ReachabilityContext";
 import { ExcludeOptions } from "@/pages/Reachability/components/ExcludeOptions";
+import { LocationSearch } from "@/pages/Reachability/components/LocationSearch";
 import { TimeIntervals } from "@/pages/Reachability/components/TimeIntervals";
 import { TravelModeTiles } from "@/pages/Reachability/components/TravelModeTiles";
 import { useIsochronePanelHandlers } from "@/pages/Reachability/hooks/use-isochrone-panel-handlers";
 import styles from "./index.module.css";
 
-/** Left panel with isochrone settings, calculate, and export controls. */
+/** Renders the left isochrone settings panel with calculate controls. */
 export function IsochronePanel() {
-  const { state, actions } = useReachability();
+  const { state: settingsState, actions: settingsActions } =
+    useReachabilitySettings();
+  const { state: calculationState, actions: calculationActions } =
+    useReachabilityCalculationState();
   const handlers = useIsochronePanelHandlers(
-    actions,
-    state.settings.departAt,
-    state.settings.exclude,
+    {
+      calculate: calculationActions.calculate,
+      setSettings: settingsActions.setSettings,
+    },
+    settingsState.settings.departAt,
+    settingsState.settings.exclude,
   );
   const locationId = useId();
   const denoiseId = useId();
   const generalizeId = useId();
   const departAtEnabledId = useId();
   const departAtId = useId();
-  const excludeAvailable = supportsExcludeProfile(state.settings.travelMode);
+  const excludeAvailable = supportsExcludeProfile(
+    settingsState.settings.travelMode,
+  );
 
   return (
     <div className={styles.root}>
@@ -41,28 +52,28 @@ export function IsochronePanel() {
       <div className={styles.body}>
         <FormField htmlFor={locationId} label="Location">
           <LocationSearch
-            disabled={state.calculating}
+            disabled={calculationState.calculating}
             id={locationId}
-            onQueryChange={actions.setLocationQuery}
-            onSelectSuggestion={actions.selectGeocodingSuggestion}
+            onQueryChange={settingsActions.setLocationQuery}
+            onSelectSuggestion={settingsActions.selectGeocodingSuggestion}
             placeholder="Search"
-            query={state.settings.locationQuery}
-            suggestions={state.geocodingSuggestions}
+            query={settingsState.settings.locationQuery}
+            suggestions={settingsState.geocodingSuggestions}
           />
         </FormField>
 
         <FormField label="Routing profile">
           <TravelModeTiles
-            disabled={state.calculating}
+            disabled={calculationState.calculating}
             onChange={handlers.handleTravelModeChange}
-            value={state.settings.travelMode}
+            value={settingsState.settings.travelMode}
           />
         </FormField>
 
         <FormField label="Time intervals (min)">
           <TimeIntervals
-            disabled={state.calculating}
-            intervals={state.settings.timeIntervals}
+            disabled={calculationState.calculating}
+            intervals={settingsState.settings.timeIntervals}
             onChange={handlers.handleTimeIntervalsChange}
           />
         </FormField>
@@ -71,17 +82,17 @@ export function IsochronePanel() {
           <div className={styles.sliderRow}>
             <input
               className={styles.slider}
-              disabled={state.calculating}
+              disabled={calculationState.calculating}
               id={denoiseId}
               max={1}
               min={0}
               onChange={handlers.handleDenoiseChange}
               step={0.1}
               type="range"
-              value={state.settings.denoise}
+              value={settingsState.settings.denoise}
             />
             <span className={styles.sliderValue}>
-              {state.settings.denoise.toFixed(1)}
+              {settingsState.settings.denoise.toFixed(1)}
             </span>
           </div>
         </FormField>
@@ -90,17 +101,17 @@ export function IsochronePanel() {
           <div className={styles.sliderRow}>
             <input
               className={styles.slider}
-              disabled={state.calculating}
+              disabled={calculationState.calculating}
               id={generalizeId}
               max={200}
               min={0}
               onChange={handlers.handleGeneralizeChange}
               step={1}
               type="range"
-              value={state.settings.generalize}
+              value={settingsState.settings.generalize}
             />
             <span className={styles.sliderValue}>
-              {state.settings.generalize}
+              {settingsState.settings.generalize}
             </span>
           </div>
         </FormField>
@@ -110,19 +121,19 @@ export function IsochronePanel() {
             <span className={styles.departAtLabel}>Depart at</span>
             <Toggle
               aria-label="Depart at"
-              checked={state.settings.departAtEnabled}
-              disabled={state.calculating}
+              checked={settingsState.settings.departAtEnabled}
+              disabled={calculationState.calculating}
               id={departAtEnabledId}
               onChange={handlers.handleDepartAtEnabledChange}
             />
           </div>
-          {state.settings.departAtEnabled ? (
+          {settingsState.settings.departAtEnabled ? (
             <DateTimePicker
               clearable
-              disabled={state.calculating}
+              disabled={calculationState.calculating}
               id={departAtId}
               onChange={handlers.handleDepartAtChange}
-              value={state.settings.departAt}
+              value={settingsState.settings.departAt}
             />
           ) : null}
         </div>
@@ -131,22 +142,28 @@ export function IsochronePanel() {
           <div className={styles.excludeSection}>
             <span className={styles.sectionLabel}>Exclude</span>
             <ExcludeOptions
-              disabled={state.calculating}
+              disabled={calculationState.calculating}
               onToggle={handlers.handleExcludeToggle}
-              selected={state.settings.exclude}
+              selected={settingsState.settings.exclude}
             />
           </div>
         ) : null}
 
-        {state.error ? <p className={styles.error}>{state.error}</p> : null}
+        {calculationState.error ? (
+          <p className={styles.error}>{calculationState.error}</p>
+        ) : null}
 
         <div className={styles.actions}>
           <Button
             className={`${buttonStyles.fullWidth}`}
-            disabled={state.calculating || !state.origin}
+            disabled={calculationState.calculating || !calculationState.origin}
             onClick={handlers.handleCalculate}
           >
-            {state.calculating ? <Spinner label="Calculating…" /> : "Calculate"}
+            {calculationState.calculating ? (
+              <Spinner label="Calculating…" />
+            ) : (
+              "Calculate"
+            )}
           </Button>
         </div>
       </div>

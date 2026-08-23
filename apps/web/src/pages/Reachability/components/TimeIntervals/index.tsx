@@ -1,10 +1,14 @@
 import { useCallback, useEffect, useId, useState } from "react";
 import { Button } from "@/components/core/Button";
 import { Input } from "@/components/core/Input";
+import {
+  getNextUniqueInterval,
+  getRowActions,
+  type IntervalRowActions,
+} from "@/pages/Reachability/utils/time-interval-row-actions";
 import { MAX_TIME_INTERVAL_MINUTES } from "@/utils/build-contours";
 import styles from "./index.module.css";
 import { MAX_TIME_INTERVALS, type TimeIntervalsProps } from "./index.types";
-import { getRowActions, type IntervalRowActions } from "./row-actions";
 
 interface IntervalRowProps {
   actions: IntervalRowActions;
@@ -89,7 +93,7 @@ function createRowId(baseId: string): string {
   return `${baseId}-${crypto.randomUUID()}`;
 }
 
-/** Editable list of up to three time intervals in minutes. */
+/** Renders an editable list of up to three time intervals in minutes. */
 export function TimeIntervals({
   intervals,
   onChange,
@@ -125,6 +129,14 @@ export function TimeIntervals({
         return;
       }
 
+      const isDuplicate = intervals.some(
+        (interval, currentIndex) =>
+          currentIndex !== index && interval === nextValue,
+      );
+      if (isDuplicate) {
+        return;
+      }
+
       const nextIntervals = intervals.map((interval, currentIndex) =>
         currentIndex === index ? nextValue : interval,
       );
@@ -138,8 +150,11 @@ export function TimeIntervals({
       return;
     }
 
-    const lastValue = intervals.at(-1) ?? 5;
-    const nextValue = Math.min(lastValue + 5, MAX_TIME_INTERVAL_MINUTES);
+    const nextValue = getNextUniqueInterval(intervals);
+    if (nextValue === null) {
+      return;
+    }
+
     setRowIds((current) => [...current, createRowId(baseId)]);
     onChange([...intervals, nextValue]);
   }, [baseId, intervals, onChange]);

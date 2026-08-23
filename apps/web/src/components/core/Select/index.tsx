@@ -2,7 +2,7 @@ import { type ChangeEvent, useCallback } from "react";
 import styles from "./index.module.css";
 import type { SelectProps } from "./index.types";
 
-/** Styled native select for panel dropdowns. */
+/** Renders a styled native select for panel dropdowns. */
 export function Select({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,

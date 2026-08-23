@@ -2,11 +2,15 @@ import { Button } from "@/components/core/Button";
 import buttonStyles from "@/components/core/Button/index.module.css";
 import { Select } from "@/components/core/Select";
 import { formatMonthHeading, WEEKDAY_LABELS } from "@/utils/datetime-local";
-import { defaultDateForView, HOUR_OPTIONS, MINUTE_OPTIONS } from "../helpers";
+import {
+  defaultDateForView,
+  HOUR_OPTIONS,
+  MINUTE_OPTIONS,
+} from "@/utils/datetime-picker";
 import styles from "../index.module.css";
 import type { DateTimePickerPopoverProps } from "./index.types";
 
-/** Calendar and time controls shown inside the picker dialog. */
+/** Renders calendar and time controls shown inside the picker dialog. */
 export function DateTimePickerPopover({
   popoverId,
   dialogRef,

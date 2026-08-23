@@ -8,5 +8,8 @@ export const DEFAULT_MAP_VIEW = {
 /** Fixed Mapbox light style. */
 export const MAPBOX_STYLE_URL = "mapbox://styles/mapbox/light-v11";
 
-/** Left panel width used for map fit padding. */
-export const MAP_PANEL_PADDING_LEFT = 400;
+/** Viewport width at which the isochrone panel becomes a bottom sheet. */
+export const REACHABILITY_LAYOUT_BREAKPOINT_PX = 1100;
+
+/** Base inset used on each map fitBounds padding edge. */
+export const MAP_FIT_PADDING_BASE = 48;

@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import styles from "./index.module.css";
 import type { ModalProps } from "./index.types";
 
-/** Accessible dialog overlay for short confirmation and option flows. */
+/** Renders an accessible dialog overlay for short confirmation and option flows. */
 export function Modal({
   open,
   onClose,

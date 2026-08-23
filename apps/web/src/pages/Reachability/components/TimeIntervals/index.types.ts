@@ -1,4 +1,4 @@
-import { MAX_CONTOUR_COUNT } from "@/constants/travel-modes.constants";
+import { MAX_CONTOUR_COUNT } from "@/constants/contours.constants";
 
 /** Props for the time interval list editor. */
 export interface TimeIntervalsProps {

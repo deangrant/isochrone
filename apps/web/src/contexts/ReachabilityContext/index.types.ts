@@ -3,6 +3,7 @@ import type { ExcludeOptionValue } from "@/constants/exclude-options.constants";
 import type { TravelMode } from "@/constants/travel-modes.constants";
 import type { GeocodingSuggestion } from "@/types/geocoding.types";
 
+/** Map camera state and geographic origin types re-exported for context consumers. */
 export type {
   MapViewState,
   ReachabilityOrigin,
@@ -35,26 +36,41 @@ export interface ReachabilitySettings {
 
 /** Reachability application state exposed by context. */
 export interface ReachabilityState {
+  /** Contour bounds awaiting fitBounds; null when none pending. */
   boundsToFit: [[number, number], [number, number]] | null;
+  /** True while an isochrone request is in flight. */
   calculating: boolean;
+  /** User-visible error from the last failed calculation. */
   error: string | null;
+  /** Geocoding suggestions for the current location query. */
   geocodingSuggestions: GeocodingSuggestion[];
+  /** Map center and zoom persisted across sessions. */
   mapView: MapViewState;
+  /** Resolved origin coordinates; null before a valid location is set. */
   origin: ReachabilityOrigin | null;
+  /** Latest isochrone GeoJSON result; null before first successful run. */
   result: FeatureCollection | null;
   /** Travel mode used for the current result contours. */
   resultTravelMode: TravelMode | null;
+  /** Panel-controlled calculation inputs. */
   settings: ReachabilitySettings;
 }
 
 /** Reachability actions exposed by context. */
 export interface ReachabilityActions {
+  /** Runs an isochrone request from current settings and origin. */
   calculate: () => Promise<void>;
+  /** Clears pending boundsToFit without moving the map. */
   clearBoundsToFit: () => void;
+  /** Sets boundsToFit from the current result contours. */
   fitContoursBounds: () => void;
+  /** Applies a geocoding suggestion to origin and location query. */
   selectGeocodingSuggestion: (suggestion: GeocodingSuggestion) => void;
+  /** Updates the location search field and triggers geocoding. */
   setLocationQuery: (query: string) => void;
+  /** Persists map camera state from MapView interactions. */
   setMapView: (view: MapViewState) => void;
+  /** Merges partial updates into reachability settings. */
   setSettings: (patch: Partial<ReachabilitySettings>) => void;
 }
 

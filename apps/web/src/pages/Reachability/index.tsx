@@ -1,6 +1,6 @@
 import { ReachabilityLayout } from "@/pages/Reachability/ReachabilityLayout";
 
-/** Reachability map page composition root. */
+/** Renders the reachability map page. */
 export function ReachabilityPage() {
   return <ReachabilityLayout />;
 }

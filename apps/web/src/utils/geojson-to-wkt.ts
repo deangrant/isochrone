@@ -4,7 +4,7 @@ const COORD_PRECISION = 6;
 
 /**
  * Converts a GeoJSON feature collection to WKT.
- * @param collection Source feature collection.
+ * @throws When the collection is empty or a feature lacks geometry.
  */
 export function featureCollectionToWkt(collection: FeatureCollection): string {
   if (collection.features.length === 0) {
@@ -33,7 +33,7 @@ export function featureCollectionToWkt(collection: FeatureCollection): string {
 
 /**
  * Converts a GeoJSON geometry to WKT.
- * @param geometry GeoJSON geometry.
+ * @throws When the geometry type is not supported for WKT export.
  */
 export function geometryToWkt(geometry: Geometry): string {
   switch (geometry.type) {

@@ -36,8 +36,14 @@ jobs:
       - name: Setup Biome
         uses: biomejs/setup-biome@4c91541eaada48f67d7dbd7833600ce162b68f51
 
+      - name: Validate skills
+        run: pnpm validate:skills
+
       - name: Run Biome
         run: biome ci .
+
+      - name: Run tests
+        run: pnpm test
 
       - name: Validate lockfile
         run: pnpm lint:lockfile
