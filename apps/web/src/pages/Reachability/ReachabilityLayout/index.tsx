@@ -1,4 +1,4 @@
-import { type CSSProperties, lazy, Suspense, useRef } from "react";
+import { type CSSProperties, lazy, Suspense, useEffect, useRef } from "react";
 import { Spinner } from "@/components/core/Spinner";
 import { REACHABILITY_SIDE_PANEL_MAX_WIDTH_PX } from "@/constants/api.constants";
 import { getMapboxAccessToken } from "@/constants/mapbox.constants";
@@ -21,6 +21,10 @@ export function ReachabilityLayout() {
   const { state: calculationState } = useReachabilityCalculationState();
   const panelRef = useRef<HTMLElement>(null);
   const fitPadding = useMapFitPadding(panelRef);
+
+  useEffect(() => {
+    import("mapbox-gl").catch(() => undefined);
+  }, []);
 
   return (
     <div aria-busy={calculationState.calculating} className={styles.root}>

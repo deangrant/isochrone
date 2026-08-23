@@ -19,6 +19,7 @@
   "packageManager": "pnpm@11.8.0",
   "private": true,
   "scripts": {
+    "analyze:bundle": "ANALYZE=true pnpm --filter web build",
     "build": "pnpm --filter web build",
     "check": "biome check .",
     "check:fix": "biome check --write .",

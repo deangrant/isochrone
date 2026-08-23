@@ -1,5 +1,5 @@
 import type { FeatureCollection } from "geojson";
-import mapboxgl from "mapbox-gl";
+import type { Map as MapboxMap } from "mapbox-gl";
 import { useEffect, useRef } from "react";
 import { MAPBOX_STYLE_URL } from "@/constants/api.constants";
 import {
@@ -45,7 +45,7 @@ export function useMapboxReachabilityMap({
   origin,
 }: UseMapboxReachabilityMapOptions) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<mapboxgl.Map | null>(null);
+  const mapRef = useRef<MapboxMap | null>(null);
   const mapReadyRef = useRef(false);
   const initialMapViewRef = useRef(mapView);
   const onViewChangeRef = useRef(onViewChange);
@@ -63,26 +63,11 @@ export function useMapboxReachabilityMap({
       return;
     }
 
-    mapboxgl.accessToken = mapboxAccessToken;
-    mapReadyRef.current = false;
-
-    const map = new mapboxgl.Map({
-      bearing: 0,
-      center: [initialMapViewRef.current.lon, initialMapViewRef.current.lat],
-      container,
-      dragRotate: false,
-      pitch: 0,
-      pitchWithRotate: false,
-      projection: { name: "mercator" },
-      renderWorldCopies: false,
-      style: MAPBOX_STYLE_URL,
-      touchPitch: false,
-      zoom: initialMapViewRef.current.zoom,
-    });
-    map.touchZoomRotate.disableRotation();
+    let cancelled = false;
+    let map: MapboxMap | null = null;
 
     const onMoveEnd = () => {
-      if (applyingExternalViewRef.current) {
+      if (!map || applyingExternalViewRef.current) {
         return;
       }
       const center = map.getCenter();
@@ -94,6 +79,9 @@ export function useMapboxReachabilityMap({
     };
 
     const onLoad = () => {
+      if (!map) {
+        return;
+      }
       addReachabilityMapLayers(map);
       mapReadyRef.current = true;
       const center = map.getCenter();
@@ -104,16 +92,54 @@ export function useMapboxReachabilityMap({
       });
     };
 
-    map.on("load", onLoad);
-    map.on("moveend", onMoveEnd);
+    mapReadyRef.current = false;
 
-    mapRef.current = map;
+    const initMap = async (): Promise<void> => {
+      try {
+        const mapboxModule = await import("mapbox-gl");
+        if (cancelled) {
+          return;
+        }
+
+        const mapboxgl = mapboxModule.default;
+        mapboxgl.accessToken = mapboxAccessToken;
+
+        map = new mapboxgl.Map({
+          bearing: 0,
+          center: [
+            initialMapViewRef.current.lon,
+            initialMapViewRef.current.lat,
+          ],
+          container,
+          dragRotate: false,
+          pitch: 0,
+          pitchWithRotate: false,
+          projection: { name: "mercator" },
+          renderWorldCopies: false,
+          style: MAPBOX_STYLE_URL,
+          touchPitch: false,
+          zoom: initialMapViewRef.current.zoom,
+        });
+        map.touchZoomRotate.disableRotation();
+        map.on("load", onLoad);
+        map.on("moveend", onMoveEnd);
+        mapRef.current = map;
+      } catch {
+        mapReadyRef.current = false;
+      }
+    };
+
+    initMap();
+
     return () => {
+      cancelled = true;
       mapReadyRef.current = false;
       mapRef.current = null;
-      map.off("load", onLoad);
-      map.off("moveend", onMoveEnd);
-      map.remove();
+      if (map) {
+        map.off("load", onLoad);
+        map.off("moveend", onMoveEnd);
+        map.remove();
+      }
     };
   }, [mapboxAccessToken]);
 

@@ -1,10 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "@fontsource/sora/400.css";
-import "@fontsource/sora/600.css";
+import "@fontsource/sora/latin-400.css";
+import "@fontsource/sora/latin-600.css";
 import { App } from "@/app";
 import "@/styles/global.css";
-import "@/styles/mapbox-overrides.css";
 
 const rootElement = document.getElementById("root");
 
