@@ -68,7 +68,7 @@ jobs:
         run: |
           version="$(node -e '
             const text = require("fs").readFileSync("pnpm-workspace.yaml", "utf8");
-            const match = text.match(/^\s*react-doctor:\s*([^\s#]+)/m);
+            const match = text.match(/^\s*"?react-doctor"?\s*:\s*"?([^"\s#]+)"?/m);
             if (!match) {
               console.error("react-doctor missing from pnpm-workspace.yaml catalog");
               process.exit(1);
