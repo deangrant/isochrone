@@ -23,8 +23,8 @@ export function Modal({
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) {
+    const dialog: HTMLDialogElement | null = dialogRef.current;
+    if (dialog === null) {
       return;
     }
 
