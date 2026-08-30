@@ -54,7 +54,7 @@ export function IsochronePanel() {
         </p>
       </header>
 
-      <div className={styles.body}>
+      <div className={styles.fields}>
         <FormField htmlFor={locationId} label="Start location">
           <LocationSearch
             disabled={calculationState.calculating}
@@ -155,9 +155,13 @@ export function IsochronePanel() {
             />
           </div>
         ) : null}
+      </div>
 
+      <div className={styles.footer}>
         {calculationState.error ? (
-          <p className={styles.error}>{calculationState.error}</p>
+          <p className={styles.error} role="alert">
+            {calculationState.error}
+          </p>
         ) : null}
 
         <div className={styles.actions}>

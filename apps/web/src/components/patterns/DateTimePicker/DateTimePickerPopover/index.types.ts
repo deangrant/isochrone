@@ -1,4 +1,4 @@
-import type { MouseEvent, RefObject } from "react";
+import type { MouseEvent, RefObject, SyntheticEvent } from "react";
 
 /** One cell in the calendar month grid. */
 export interface CalendarCell {
@@ -20,6 +20,10 @@ export interface DateTimePickerPopoverProps {
   hourSelectId: string;
   /** Id of the minute select for label association. */
   minuteSelectId: string;
+  /** Notifies the parent when Escape requests dialog dismissal. */
+  onCancel: (event: SyntheticEvent<HTMLDialogElement>) => void;
+  /** Notifies the parent when the backdrop requests dialog dismissal. */
+  onClose: () => void;
   /** Notifies the parent when a calendar day is chosen. */
   onDayClick: (event: MouseEvent<HTMLButtonElement>) => void;
   /** Notifies the parent when the user confirms the selection. */

@@ -55,18 +55,13 @@ describe("DateTimePicker", () => {
     expect(getDialog()).not.toHaveAttribute("open");
   });
 
-  it("closes the dialog when clicking outside the picker", () => {
-    const { container } = render(
-      <div>
-        <DateTimePicker onChange={vi.fn()} value="2026-08-22T15:30" />
-        <button type="button">Outside</button>
-      </div>,
-    );
+  it("closes the dialog when the backdrop is clicked", () => {
+    render(<DateTimePicker onChange={vi.fn()} value="2026-08-22T15:30" />);
 
+    fireEvent.click(screen.getByRole("button", { name: SELECTED_TRIGGER }));
     fireEvent.click(
-      within(container).getByRole("button", { name: SELECTED_TRIGGER }),
+      within(getDialog()).getByRole("button", { name: "Close dialog" }),
     );
-    fireEvent.mouseDown(screen.getByRole("button", { name: "Outside" }));
 
     expect(getDialog()).not.toHaveAttribute("open");
   });

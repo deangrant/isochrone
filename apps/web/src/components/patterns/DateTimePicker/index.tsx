@@ -1,4 +1,4 @@
-import type { MouseEvent as ReactMouseEvent } from "react";
+import type { MouseEvent as ReactMouseEvent, SyntheticEvent } from "react";
 import {
   useCallback,
   useEffect,
@@ -31,7 +31,6 @@ export function DateTimePicker({
   const popoverId = useId();
   const hourSelectId = useId();
   const minuteSelectId = useId();
-  const rootRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const selected = parseDateTimeLocal(value);
   const [open, setOpen] = useState(false);
@@ -71,8 +70,8 @@ export function DateTimePicker({
   }, [value]);
 
   useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) {
+    const dialog: HTMLDialogElement | null = dialogRef.current;
+    if (dialog === null) {
       return;
     }
 
@@ -84,40 +83,22 @@ export function DateTimePicker({
 
     if (open) {
       if (!dialog.open) {
-        dialog.show();
+        if (typeof dialog.showModal === "function") {
+          dialog.showModal();
+        } else {
+          dialog.setAttribute("open", "");
+        }
       }
     } else if (dialog.open) {
-      dialog.close();
+      if (typeof dialog.close === "function") {
+        dialog.close();
+      } else {
+        dialog.removeAttribute("open");
+      }
     }
 
     return () => {
       dialog.removeEventListener("close", handleDialogClose);
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    const handlePointerDown = (event: globalThis.MouseEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handlePointerDown);
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("mousedown", handlePointerDown);
-      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);
 
@@ -144,6 +125,18 @@ export function DateTimePicker({
   const handleDone = useCallback(() => {
     setOpen(false);
   }, []);
+
+  const handleClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  const handleCancel = useCallback(
+    (event: SyntheticEvent<HTMLDialogElement>) => {
+      event.preventDefault();
+      setOpen(false);
+    },
+    [],
+  );
 
   const handlePreviousMonth = useCallback(() => {
     if (viewMonth === 0) {
@@ -220,7 +213,7 @@ export function DateTimePicker({
   );
 
   return (
-    <div className={styles.root} ref={rootRef}>
+    <div className={styles.root}>
       <div className={styles.triggerRow}>
         <button
           aria-controls={open ? popoverId : undefined}
@@ -260,6 +253,8 @@ export function DateTimePicker({
         disabled={disabled}
         hourSelectId={hourSelectId}
         minuteSelectId={minuteSelectId}
+        onCancel={handleCancel}
+        onClose={handleClose}
         onDayClick={handleDayClick}
         onDone={handleDone}
         onHourChange={handleHourChange}

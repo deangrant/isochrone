@@ -1,23 +1,16 @@
 {
-  "author": "Dean Grant",
+  "name": "isochrone",
+  "version": "1.0.0",
+  "private": true,
   "description": "Reachability map — isochrone explorer with Mapbox",
-  "devDependencies": {
-    "@biomejs/biome": "catalog:",
-    "react-doctor": "catalog:",
-    "ultracite": "catalog:"
-  },
-  "engines": {
-    "node": ">=22"
-  },
   "keywords": [
     "isochrone",
     "mapbox",
     "reachability"
   ],
   "license": "MIT",
-  "name": "isochrone",
-  "packageManager": "pnpm@11.8.0",
-  "private": true,
+  "author": "Dean Grant",
+  "type": "module",
   "scripts": {
     "analyze:bundle": "ANALYZE=true pnpm --filter web build",
     "build": "pnpm --filter web build",
@@ -37,6 +30,13 @@
     "validate:skills": "node scripts/validate-skills.mjs",
     "verify": "pnpm validate:skills && pnpm exec biome ci . && pnpm test && pnpm build"
   },
-  "type": "module",
-  "version": "1.0.0"
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "react-doctor": "catalog:",
+    "ultracite": "catalog:"
+  },
+  "packageManager": "pnpm@11.8.0",
+  "engines": {
+    "node": ">=22"
+  }
 }

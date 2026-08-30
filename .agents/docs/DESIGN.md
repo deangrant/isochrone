@@ -255,8 +255,8 @@ Map new UI to existing patterns under `apps/web/src/components/` and
 - **HelpModal** — wider panel (`48rem`), section cards on `bg-elevated`, intro
   callout with left accent border.
 - **Map controls** — circular elevated buttons; hover shifts to accent color.
-- **IsochronePanel** — scrollable settings stack with section labels, error
-  banner using danger soft treatment.
+- **IsochronePanel** — scrollable settings fields with sticky footer for the
+  error banner (danger soft treatment) and Calculate / Clear actions.
 - **Map** — Mapbox `light-v11` under dark UI; contour and marker paint from
   `map-layers.ts` / `map-helpers.ts`, not scattered hex in random modules.
 
