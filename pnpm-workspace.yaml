@@ -18,7 +18,7 @@ catalog:
   "mapbox-gl": "3.28.1"
   "react": "19.2.8"
   "react-dom": "19.2.8"
-  "react-doctor": "0.9.3"
+  "react-doctor": "0.9.12"
   "rollup-plugin-visualizer": "7.0.1"
   "typescript": "7.0.2"
   "ultracite": "7.10.0"
