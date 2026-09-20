@@ -21,7 +21,7 @@ catalog:
   "react-doctor": "0.9.12"
   "rollup-plugin-visualizer": "7.1.1"
   "typescript": "7.0.2"
-  "ultracite": "7.10.6"
+  "ultracite": "7.10.7"
   "vite": "8.2.2"
   "vitest": "4.1.11"
 
