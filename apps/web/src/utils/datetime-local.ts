@@ -45,7 +45,7 @@ export function formatDateTimeDisplay(date: Date): string {
  * @returns Parsed date, or null when the value is invalid.
  */
 export function parseDateTimeLocal(value: string): Date | null {
-  const match = DATE_TIME_LOCAL_PATTERN.exec(value);
+  const match: RegExpExecArray | null = DATE_TIME_LOCAL_PATTERN.exec(value);
   if (!match) {
     return null;
   }
