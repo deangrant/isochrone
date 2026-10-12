@@ -29,7 +29,7 @@ The browser is a single-page application that calls Mapbox directly for map tile
 Runtime bar:
 
 - Node.js `>=22`
-- pnpm `11.8.0` (pinned via `packageManager`)
+- pnpm `12.5.1` (pinned via `packageManager`)
 - Local development: Vite on `:5173`
 - Required Mapbox token scopes: **Maps**, **Geocoding**, **Isochrone API**
 
