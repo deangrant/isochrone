@@ -38,7 +38,7 @@ map, and export contours as GeoJSON or WKT.
 - Contour minutes must be unique and strictly increasing.
 - Never add Biome suppressions or config overrides to pass lint.
 
-**Runtime:** Node.js `>=22`, pnpm `11.8.0` (pinned via `packageManager`). Local dev: Vite
+**Runtime:** Node.js `>=22`, pnpm `12.5.1` (pinned via `packageManager`). Local dev: Vite
 `:5173`. Build: `pnpm build` (`apps/web` only).
 
 Mapbox public token (`VITE_MAPBOX_GL_JS_PUBLIC`) must have **Maps**, **Geocoding**, and
