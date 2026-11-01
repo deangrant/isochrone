@@ -1,0 +1,21 @@
+name: Read Node.js version
+description: Highest x.y.z from package.json engines.node
+outputs:
+  version:
+    description: Selected Node.js version
+    value: ${{ steps.resolve.outputs.version }}
+runs:
+  using: composite
+  steps:
+    - id: resolve
+      shell: bash
+      run: |
+        version="$(node -p "require('./package.json').engines.node" \
+          | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
+          | sort -V \
+          | tail -1)"
+        if [ -z "$version" ]; then
+          echo "No Node.js version found in package.json engines"
+          exit 1
+        fi
+        echo "version=${version}" >> "$GITHUB_OUTPUT"
