@@ -36,7 +36,7 @@ catalog:
   "jsdom": "30.1.2"
   "mapbox-gl": "3.32.0"
   "react": "19.3.0"
-  "react-doctor": "0.9.14"
+  "react-doctor": "0.9.17"
   "react-dom": "19.3.0"
   "rollup-plugin-visualizer": "7.1.1"
   "typescript": "7.0.2"
