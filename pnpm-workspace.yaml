@@ -37,7 +37,7 @@ catalog:
   "mapbox-gl": "3.33.0"
   "react": "19.3.1"
   "react-doctor": "0.9.18"
-  "react-dom": "19.3.0"
+  "react-dom": "19.3.1"
   "rollup-plugin-visualizer": "7.1.1"
   "typescript": "7.0.2"
   "ultracite": "8.0.1"
@@ -57,8 +57,6 @@ minimumReleaseAgeExclude:
   - "@isaacs/nonrecursive-glob-match@1.0.1" # Required by minimatch@11.0.1 as transitive dependency (2026-10-27T04:24:52.559Z).
   - fast-uri@3.1.9 # CVE-2026-110306, fixed in 3.1.9 (2026-10-19T23:05:26.357Z).
   - minimatch@11.0.1 # CVE-2026-118764, fixed in 11.0.1 (2026-10-27T22:26:03.755Z).
-  - undici@8.12.2 # CVE-2026-109869, fixed in 8.12.2 (2026-10-15T15:05:34.415Z).
-  - zod@4.6.6 # CVE-2023-54404, fixed in 4.6.6 (2026-10-11T16:18:23.878Z).
 
 # Fail resolution instead of falling back to a version younger than
 # minimumReleaseAge. Frozen-lockfile installs are also checked against this
