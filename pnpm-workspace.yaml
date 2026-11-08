@@ -40,7 +40,7 @@ catalog:
   "react-dom": "19.3.0"
   "rollup-plugin-visualizer": "7.1.1"
   "typescript": "7.0.2"
-  "ultracite": "8.0.0"
+  "ultracite": "8.0.1"
   "vite": "8.3.4"
   "vitest": "5.0.5"
 
